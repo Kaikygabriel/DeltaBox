@@ -1,0 +1,50 @@
+namespace DeltaBox.Services;
+
+public class AddVersionsHandler
+{
+    public bool Create(string pathOfFiles,string nameVersion)
+    {
+        AddNewVersion(pathOfFiles,nameVersion);
+        return true;
+    }
+
+    private bool AddNewVersion(string pathFromFolder,string nameVersion)
+    {
+        try
+        {
+            var fileDelta =File.ReadAllText(pathFromFolder+"/deltabox");
+            if (string.IsNullOrEmpty(fileDelta))
+                return false;
+            
+            byte[] originalBytes = Convert.FromBase64String(fileDelta);
+            
+            var files = Directory.GetFiles(pathFromFolder);
+            byte[] bytesInFilesCurrent = []; 
+
+            foreach (var file in files)
+            {
+                byte[] content = File.ReadAllBytes(file);
+                bytesInFilesCurrent.Concat(content);
+            }
+
+            byte[] patch = new byte[bytesInFilesCurrent.Length];
+
+            for (int i = 0; i < bytesInFilesCurrent.Length; i++)
+            {
+                // Se o original for menor, o resto do patch é o próprio byte novo
+                byte byteOriginal = (i < originalBytes.Length) ? originalBytes[i] : (byte)0;
+        
+                // Usamos XOR (^) que é excelente para comparar bits
+                patch[i] = (byte)(byteOriginal ^ bytesInFilesCurrent[i]);
+            }
+            
+            File.AppendAllText(pathFromFolder + "/deltabox", patch.ToString() + $"/{nameVersion}/{DateTime.Now}");
+
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
+}

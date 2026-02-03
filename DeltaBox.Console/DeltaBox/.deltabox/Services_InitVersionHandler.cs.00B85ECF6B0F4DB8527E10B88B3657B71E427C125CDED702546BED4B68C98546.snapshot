@@ -1,0 +1,57 @@
+using System.Security.Cryptography;
+using System.Text;
+
+namespace DeltaBox.Services;
+
+public class InitVersionHandler
+{
+    public bool Create(string pathOfFiles)
+    {
+        TryInitVersionInFolder(pathOfFiles);
+        return true;
+    }
+
+    private bool TryInitVersionInFolder(string pathFromFolder)
+    {
+        try
+        {
+            if (!Directory.Exists(pathFromFolder))
+                return false;
+
+            var storeDir = Path.Combine(pathFromFolder, ".deltabox");
+            Directory.CreateDirectory(storeDir);
+
+            // pega todos os arquivos, mas ignora a pasta .deltabox
+            var files = Directory.EnumerateFiles(pathFromFolder, "*", SearchOption.AllDirectories)
+                .Where(f => !f.StartsWith(storeDir, StringComparison.OrdinalIgnoreCase));
+
+            foreach (var file in files)
+            {
+                var relPath = Path.GetRelativePath(pathFromFolder, file);
+
+                // hash do conteúdo (identifica mudanças)
+                var bytes = File.ReadAllBytes(file);
+                var hash = Convert.ToHexString(SHA256.HashData(bytes));
+
+                // cria caminho seguro no storage
+                var safeName = relPath.Replace(Path.DirectorySeparatorChar, '_')
+                    .Replace(Path.AltDirectorySeparatorChar, '_');
+
+                var snapshotPath = Path.Combine(storeDir, $"{safeName}.{hash}.snapshot");
+
+                // evita duplicar snapshot igual
+                if (!File.Exists(snapshotPath))
+                    File.WriteAllBytes(snapshotPath, bytes);
+
+                // você pode depois registrar isso num manifest (json/sqlite)
+                Console.WriteLine($"Versionado: {relPath} | {hash}");
+            }
+
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
+}
