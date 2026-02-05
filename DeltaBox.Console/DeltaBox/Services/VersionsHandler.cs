@@ -1,48 +1,49 @@
+using System.Net;
+
 namespace DeltaBox.Services;
 
 public class VersionsHandler
 {
-    public static void GoToVersion(string pathName, string versionName)
+    public static void GoToVersion1(string pathFromFolder, string versionName)
     {
         var files = Directory.GetFiles(pathFromFolder);
         if (!files.Any(x => Path.GetFileName(x) == "deltabox"))
-            return false;
-        var result = new Dictionary<string, string>();
+        { 
+            return;
+        } 
+        
+        var results = new Dictionary<string, string>();
             
         foreach (var line in File.ReadLines(pathFromFolder+"/deltabox"))
         {
             var parts = line.Split('|');
-            if (parts.Length == 3 && parts[0] == "Init")
-                result[parts[1]] = parts[2];
-        }
-        File.AppendAllText(pathFromFolder + "/deltabox", $"\n{nameVersion}\n");
-
-        foreach (var filePath in files)
-        {
-            byte[] currentContent = File.ReadAllBytes(filePath);
-            string fileName = Path.GetFileName(filePath);
-
-            var key = result.Keys.FirstOrDefault(x => x.Equals(fileName,StringComparison.CurrentCultureIgnoreCase));
-            if (key is not null && fileName != "deltabox")
+            if (parts.Length == 3 && parts[0].Equals(versionName,StringComparison.InvariantCultureIgnoreCase))
             {
-                var fileInBytePrevius = Convert.FromBase64String(result.GetValueOrDefault(key) ?? string.Empty);
-                    
-                if (!currentContent.SequenceEqual(fileInBytePrevius))
+                if (parts[0].Equals(versionName,StringComparison.InvariantCultureIgnoreCase))
                 {
-                    var text = $"{nameVersion}|{fileName}|{Convert.ToBase64String(currentContent)}\n";
-                    Console.WriteLine($"Versionando : {text} ");
-                    File.AppendAllText(pathFromFolder + "/deltabox", text);
+                    results.Add(parts[1],parts[2]);
                 }
-                        
             }
-            else if(fileName != "deltabox") 
+        }
+
+        if (results.Count <= 0)
+            return ;
+        
+        foreach (var file in files)
+        {
+            if ( Path.GetFileName(file)!= "deltabox")
+                File.Delete(file);
+        }
+        
+        foreach (var result in results)
+        {
+            var fileInBytePrevius = Convert.FromBase64String(result.Value);
+
+            if (result.Key != "deltabox")
             {
-                byte[] content = File.ReadAllBytes(filePath);
-                var fileInBase64 = Convert.ToBase64String(content);
-                var text = $"{nameVersion}|{fileName}|{fileInBase64}\n";
-                Console.WriteLine($"Versionando : {text} ");
-                File.AppendAllText(pathFromFolder + "/deltabox", text);
+                File.WriteAllBytes(pathFromFolder+"/"+result.Key,fileInBytePrevius);
             }
         }
     }
+
 }
