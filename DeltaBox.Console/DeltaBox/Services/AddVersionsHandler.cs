@@ -26,19 +26,38 @@ public class AddVersionsHandler
 
         File.AppendAllText(pathFromFolder + "/deltabox", $"\n{nameVersion}\n");
 
+        UpdateFilesInDeltaBox(files, result, nameVersion, pathFromFolder);
+
+        
+        var dictionaries = Directory.GetDirectories(
+            pathFromFolder,
+            "*",
+            SearchOption.AllDirectories);
+
+        foreach (var subDictionary in dictionaries)
+        {
+            UpdateFilesInDeltaBox(Directory.GetFiles(subDictionary), result, nameVersion, pathFromFolder);
+        }  
+        
+        return true;
+    }
+
+    private void UpdateFilesInDeltaBox(string[] files,Dictionary<string, string>result,string nameVersion,string pathFromFolder)
+    {
+         
         foreach (var filePath in files)
         {
             byte[] currentContent = File.ReadAllBytes(filePath);
             string fileName = Path.GetFileName(filePath);
 
-            var key = result.Keys.FirstOrDefault(x => x.Equals(fileName, StringComparison.CurrentCultureIgnoreCase));
+            var key = result.Keys.FirstOrDefault(x => x.Equals(filePath, StringComparison.CurrentCultureIgnoreCase));
             if (key is not null && fileName != "deltabox")
             {
                 var fileInBytePrevius = Convert.FromBase64String(result.GetValueOrDefault(key) ?? string.Empty);
 
                 if (!currentContent.SequenceEqual(fileInBytePrevius))
                 {
-                    var text = $"{nameVersion}|{fileName}|{Convert.ToBase64String(currentContent)}\n";
+                    var text = $"{nameVersion}|{filePath}|{Convert.ToBase64String(currentContent)}\n";
                     Console.WriteLine($"Versionando : {text} ");
                     File.AppendAllText(pathFromFolder + "/deltabox", text);
                 }
@@ -47,26 +66,11 @@ public class AddVersionsHandler
             {
                 byte[] content = File.ReadAllBytes(filePath);
                 var fileInBase64 = Convert.ToBase64String(content);
-                var text = $"{nameVersion}|{fileName}|{fileInBase64}\n";
+                var text = $"{nameVersion}|{filePath}|{fileInBase64}\n";
                 Console.WriteLine($"Versionando : {text} ");
                 File.AppendAllText(pathFromFolder + "/deltabox", text);
             }
         }
 
-        //
-        //
-        // var sla = new Dictionary<string, string>();
-        //
-        // foreach (var line in File.ReadLines(pathFromFolder+"/deltabox"))
-        // {
-        //     var parts = line.Split('|'); 
-        //     if (parts.Length == 3) sla[parts[1]] = parts[2];
-        // }
-        //
-        //             
-        // foreach(var r in sla)
-        //     Console.WriteLine(Encoding.UTF8.GetString(Convert.FromBase64String(r.Value)));
-        //
-        return true;
     }
 }

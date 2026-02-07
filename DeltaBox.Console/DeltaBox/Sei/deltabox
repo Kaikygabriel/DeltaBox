@@ -1,11 +1,16 @@
-Init|Ola|TUVVIE5PTUUgw4ggS0FJS1kgR0FCUklFTCBBTFZFUyBTQUxWRUVF
+Init|.\Sei\Teste.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaTsNCg0KcHVibGljIGNsYXNzIFRlc3RlDQp7DQogICAgDQp9
+Init|.\Sei\Test\Ola|b2xhIG11bmRv
+
 v2
-v2|Ola|TUVVIE5PTUUgw4gg
+v2|.\Sei\Teste.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaTsNCg0KcHVibGljIGNsYXNzIFRlc3RlDQp7DQogcHVibGljIHN0cmluZyBuYW1lIHsgZ2V0OyBzZXQ7IH0gICANCn0=
+v2|.\Sei\Test\Ola|b2xhIG11bmRvICEgbm92YW1lbnRl
 
 v3
-v3|Ola|TUVVIE5PTUUgw4gg
-v3|testando.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaTsNCg0KcHVibGljIGNsYXNzIHRlc3RhbmRvDQp7DQogICAgDQp9
+v3|.\Sei\Teste.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaTsNCg0KcHVibGljIGNsYXNzIFRlc3RlDQp7DQogcHVibGljIHN0cmluZyBuYW1lIHsgZ2V0OyBzZXQ7IH0gICANCn0=
+v3|.\Sei\Test\Ola|b2xhIG11bmRvICEgbm92YW1lbnRl
+v3|.\Sei\Test\Entities\Product|cHJvZHV0byBkZSBtb3VzZQ==
+
 v4
-v4|Ola|TUVVIE5PTUUgw4gg
-v4|testando.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaTsNCg0KcHVibGljIGNsYXNzIHRlc3RhbmRvDQp7DQogICAgDQp9
-v4|v4.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaTsNCg0KcHVibGljIGNsYXNzIHY0DQp7DQogICAgDQp9
+v4|.\Sei\Teste.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaTsNCg0KcHVibGljIGNsYXNzIFRlc3RlDQp7DQogcHVibGljIHN0cmluZyBuYW1lIHsgZ2V0OyBpbml0OyB9ICAgDQp9
+v4|.\Sei\Test\Ola|b2xhIG11bmRvICEgbm92YW1lbnRlIGEgZmRnc2RmZ2Q=
+v4|.\Sei\Test\Entities\Product|cHJvZHV0byBkZSBtb3VzZSANCnByb2R1dG8gZGUgdGVjbGFkbyA=

@@ -14,30 +14,40 @@ public class InitVersionHandler
         {
             if (!Directory.Exists(pathFromFolder))
                 return false;
+
             var files = Directory.GetFiles(pathFromFolder);
+            
+            SaveFilesOfDirectory(files,pathFromFolder);
+            
+            var dictionaries = Directory.GetDirectories(
+                pathFromFolder,
+                "*",
+                SearchOption.AllDirectories);
 
-            for (var a = 0; a < files.Length; a++)
+            foreach (var subDictionary in dictionaries)
             {
-                byte[] content = File.ReadAllBytes(files[a]);
-                var fileInBase64 = Convert.ToBase64String(content);
-                var text = $"Init|{Path.GetFileName(files[a])}|{fileInBase64}\n";
-                Console.WriteLine($"Versionando :  {text}");
-                File.AppendAllText(pathFromFolder + "/deltabox", text);
-            }
-
-            var result = new Dictionary<string, string>();
-
-            foreach (var line in File.ReadLines(pathFromFolder + "/deltabox"))
-            {
-                var parts = line.Split('|'); // Formato: NomeDoArquivo|Hash
-                if (parts.Length == 3) result[parts[1]] = parts[2];
-            }
-
+                var filesInSubDictionary = Directory.GetFiles(subDictionary);
+                SaveFilesOfDirectory(filesInSubDictionary,pathFromFolder);
+            }  
+          
             return true;
         }
         catch (Exception e)
         {
             return false;
+        }
+    }
+
+    private void SaveFilesOfDirectory(string[] files,string pathFromFolder)
+    {
+        var fileDeltaBox = pathFromFolder + "/deltabox";
+        for (var a = 0; a < files.Length; a++)
+        {
+            byte[] content = File.ReadAllBytes(files[a]);
+            var fileInBase64 = Convert.ToBase64String(content);
+            var text = $"Init|{files[a]}|{fileInBase64}\n";
+            Console.WriteLine($"Versionando :  {text}");
+            File.AppendAllText(fileDeltaBox, text);
         }
     }
 }
