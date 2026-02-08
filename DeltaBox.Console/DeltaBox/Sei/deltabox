@@ -1,16 +1,16 @@
-Init|.\Sei\Teste.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaTsNCg0KcHVibGljIGNsYXNzIFRlc3RlDQp7DQogICAgDQp9
-Init|.\Sei\Test\Ola|b2xhIG11bmRv
 
-v2
-v2|.\Sei\Teste.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaTsNCg0KcHVibGljIGNsYXNzIFRlc3RlDQp7DQogcHVibGljIHN0cmluZyBuYW1lIHsgZ2V0OyBzZXQ7IH0gICANCn0=
-v2|.\Sei\Test\Ola|b2xhIG11bmRvICEgbm92YW1lbnRl
+Init|08/02/2026 16:27:23
+Init|.\Sei\Iteste.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaTsNCg0KcHVibGljIGludGVyZmFjZSBJdGVzdGUNCnsNCiAgICB2b2lkIFRlc3RhcigpOw0KfQ==
+Init|.\Sei\Entity\Teste.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaS5FbnRpdHk7DQoNCnB1YmxpYyBjbGFzcyBUZXN0ZSA6IEl0ZXN0ZQ0Kew0KICAgIHB1YmxpYyB2b2lkIFRlc3RhcigpDQogICAgew0KICAgICAgICANCiAgICB9DQp9
+Init|.\Sei\Entity\Abstraction\Entity.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaS5FbnRpdHkuQWJzdHJhY3Rpb247DQoNCnB1YmxpYyBhYnN0cmFjdCBjbGFzcyBFbnRpdHkNCnsNCiAgICBwdWJsaWMgR3VpZCBJZCB7IGdldDsgc2V0OyB9DQp9
+Init|.\Sei\Entity\sub\d|
+Init|.\Sei\Entity\sub\subarquivo|b2xhIG11bmRvICEgbm92YW1lbnRl
 
-v3
-v3|.\Sei\Teste.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaTsNCg0KcHVibGljIGNsYXNzIFRlc3RlDQp7DQogcHVibGljIHN0cmluZyBuYW1lIHsgZ2V0OyBzZXQ7IH0gICANCn0=
-v3|.\Sei\Test\Ola|b2xhIG11bmRvICEgbm92YW1lbnRl
-v3|.\Sei\Test\Entities\Product|cHJvZHV0byBkZSBtb3VzZQ==
+v2|08/02/2026 16:29:08
+v2|.\Sei\Iteste.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaTsNCg0KcHVibGljIGludGVyZmFjZSBJdGVzdGUNCnsNCiAgICB2b2lkIFRlc3RhcigpOw0KfQ==
+v2|.\Sei\Entity\Teste.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaS5FbnRpdHk7DQoNCnB1YmxpYyBjbGFzcyBUZXN0ZSA6IEl0ZXN0ZQ0Kew0KICAgIHB1YmxpYyB2b2lkIFRlc3RhcigpDQogICAgew0KICAgICAgICANCiAgICB9DQp9
+v2|.\Sei\Entity\Abstraction\c|YWJj
+v2|.\Sei\Entity\Abstraction\Entity.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaS5FbnRpdHkuQWJzdHJhY3Rpb247DQoNCnB1YmxpYyBhYnN0cmFjdCBjbGFzcyBFbnRpdHkNCnsNCiAgICBwdWJsaWMgR3VpZCBJZCB7IGdldDsgaW5pdDsgfQ0KfQ==
+v2|.\Sei\Entity\sub\d|
+v2|.\Sei\Entity\sub\subarquivo|b2xhIG11bmRvICEgbm92YW1lbnRl
 
-v4
-v4|.\Sei\Teste.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaTsNCg0KcHVibGljIGNsYXNzIFRlc3RlDQp7DQogcHVibGljIHN0cmluZyBuYW1lIHsgZ2V0OyBpbml0OyB9ICAgDQp9
-v4|.\Sei\Test\Ola|b2xhIG11bmRvICEgbm92YW1lbnRlIGEgZmRnc2RmZ2Q=
-v4|.\Sei\Test\Entities\Product|cHJvZHV0byBkZSBtb3VzZSANCnByb2R1dG8gZGUgdGVjbGFkbyA=

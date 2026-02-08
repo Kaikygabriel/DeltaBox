@@ -1,26 +1,24 @@
 namespace DeltaBox.Services;
 
-public class RemoveVersionHandler
+public class GetVersionsHandler
 {
-    public static void RemoveVersion(string pathFromFolder, string nameVersion)
+    public static void Get(string pathFromFolder)
     {
+        Console.WriteLine(" \nVersions :\n");
+
         if (!Directory.Exists(pathFromFolder))
             return ;
-        
         var files = Directory.GetFiles(pathFromFolder);
         var deltaBoxFile = files.FirstOrDefault(x => Path.GetFileName(x).Equals("deltabox"));
-        
         if (deltaBoxFile is null)
             return ;
-        
-        var linesInDelta = File.ReadLines(deltaBoxFile).ToList();
         foreach (var line in File.ReadLines(deltaBoxFile))
         {
             var parts = line.Split('|');
-            if (parts[0].Equals(nameVersion, StringComparison.CurrentCultureIgnoreCase))
-                linesInDelta.Remove(line);
+            if (parts.Length == 2)
+            {
+                Console.WriteLine($"\t{parts[0]} - {parts[1]}");
+            }
         }
-        File.WriteAllLines(deltaBoxFile, linesInDelta);
-
     }
 }

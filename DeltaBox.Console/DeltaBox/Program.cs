@@ -1,17 +1,7 @@
 ﻿using DeltaBox.Services;
 
 var create = new InitVersionHandler();
-//create.Create(args.FirstOrDefault());
-
-//Console.ReadLine();
-//AltersFilesHandler.ViewAltersFiles(args.FirstOrDefault());
-
-//var nameFile = Console.ReadLine();
 var alter = new AddVersionsHandler();
-//alter.Create(args.FirstOrDefault(),nameFile);
-
-//VersionsHandler.GoToVersion1(args.FirstOrDefault(),nameFile);
-
 
 var folder = args[1];
 var method = args[0];
@@ -31,4 +21,10 @@ else if (method.Equals("Status",StringComparison.CurrentCultureIgnoreCase))
 
 else if (method.Equals("Commit",StringComparison.CurrentCultureIgnoreCase) ) 
     alter.Create(folder,args[2]);
+
+else if (method.Equals("Log",StringComparison.CurrentCultureIgnoreCase) ) 
+    GetVersionsHandler.Get(folder);
+
+else if (method.Equals("Remove",StringComparison.CurrentCultureIgnoreCase) ) 
+    RemoveVersionHandler.RemoveVersion(folder,args[2]);
 

@@ -20,11 +20,11 @@ public class AddVersionsHandler
         foreach (var line in File.ReadLines(pathFromFolder + "/deltabox"))
         {
             var parts = line.Split('|');
-            if (parts.Length == 3 && parts[0] == "Init")
+            if (parts.Length == 3 && parts[0] == nameVersion)
                 result[parts[1]] = parts[2];
         }
 
-        File.AppendAllText(pathFromFolder + "/deltabox", $"\n{nameVersion}\n");
+        File.AppendAllText(pathFromFolder + "/deltabox", $"\n{nameVersion}|{DateTime.UtcNow}\n");
 
         UpdateFilesInDeltaBox(files, result, nameVersion, pathFromFolder);
 

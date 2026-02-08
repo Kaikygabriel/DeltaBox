@@ -16,9 +16,9 @@ public static class AltersFilesHandler
         foreach (var line in File.ReadLines(pathFromFolder + "/deltabox"))
         {
             var parts = line.Split('|');
-            if (parts.Length == 1)
+            if (parts.Length == 2)
             {
-                currentVersion = parts.Last();
+                currentVersion = parts.First();
             }
         }
         
@@ -31,23 +31,34 @@ public static class AltersFilesHandler
             }
         }
     
-        Console.WriteLine("     Files Changes :\n");
-        GetAltersInFile(files, result);
-        ActiveInSubDictionary(Directory.GetDirectories(pathFromFolder), result);
-
+        Console.WriteLine("\n     Files Changes :\n");
+        GetModifiedFiles(files, result);
+        ActiveGetModifiedInSubDictionary(Directory.GetDirectories(pathFromFolder), result);
+        Console.WriteLine("\n     New Files  :\n");
+        GetNewFiles(files, result);
+        ActiveGetNewInSubDictionary(Directory.GetDirectories(pathFromFolder), result);
     }
-
-    private static void ActiveInSubDictionary(IEnumerable<string> dictionaries,Dictionary<string, string> result)
+    private static void ActiveGetNewInSubDictionary(IEnumerable<string> dictionaries,Dictionary<string, string> result)
     {
         foreach (var d in dictionaries)
         {
-            GetAltersInFile(Directory.GetFiles(d),result);   
+            GetNewFiles(Directory.GetFiles(d),result);   
             var subSubDictionaries = Directory.GetDirectories(d);
             if (subSubDictionaries.Length >= 1)
-                ActiveInSubDictionary(subSubDictionaries,result);
+                ActiveGetNewInSubDictionary(subSubDictionaries,result);
         }
     }
-    private static void GetAltersInFile(IEnumerable<string> files,Dictionary<string, string> result)
+    private static void ActiveGetModifiedInSubDictionary(IEnumerable<string> dictionaries,Dictionary<string, string> result)
+    {
+        foreach (var d in dictionaries)
+        {
+            GetModifiedFiles(Directory.GetFiles(d),result);   
+            var subSubDictionaries = Directory.GetDirectories(d);
+            if (subSubDictionaries.Length >= 1)
+                ActiveGetModifiedInSubDictionary(subSubDictionaries,result);
+        }
+    }
+    private static void GetModifiedFiles(IEnumerable<string> files,Dictionary<string, string> result)
     {
         foreach (var filePath in files)
         {
@@ -62,15 +73,26 @@ public static class AltersFilesHandler
                 {
                     var currentTextColor = Console.ForegroundColor;
                     Console.ForegroundColor = ConsoleColor.DarkRed;
-                    Console.WriteLine(" Modified :    "+filePath);
+                    Console.WriteLine("\tModified :    "+filePath);
                     Console.ForegroundColor = currentTextColor;
                 }
             }
+        }
+    }
+    private static void GetNewFiles(IEnumerable<string> files,Dictionary<string, string> result)
+    {
+        foreach (var filePath in files)
+        {
+            byte[] currentContent = File.ReadAllBytes(filePath);
+
+            var key = result.Keys.FirstOrDefault(x => x.Equals(filePath));
+            string fileName = Path.GetFileName(filePath);
+            
             if(key is null && fileName != "deltabox")
             {
                 var currentTextColor = Console.ForegroundColor;
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine(" New File :    "+filePath);
+                Console.WriteLine("\tNew File :    "+filePath);
                 Console.ForegroundColor = currentTextColor;
             }
         }

@@ -14,9 +14,13 @@ public class InitVersionHandler
         {
             if (!Directory.Exists(pathFromFolder))
                 return false;
-
             var files = Directory.GetFiles(pathFromFolder);
             
+            if (files.Any(x=>Path.GetFileName(x).Equals("deltabox")))
+                return false;
+            
+            File.AppendAllText( pathFromFolder + "/deltabox",$"\nInit|{DateTime.UtcNow}\n");
+
             SaveFilesOfDirectory(files,pathFromFolder);
             
             var dictionaries = Directory.GetDirectories(
