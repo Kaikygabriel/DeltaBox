@@ -51,6 +51,8 @@ public class InitVersionHandler
             byte[] content = File.ReadAllBytes(files[a]);
             var fileInBase64 = Convert.ToBase64String(content);
             var text = $"Init|{files[a]}|{fileInBase64}\n";
+            if (OperatingSystem.IsLinux() || OperatingSystem.IsMacOS())
+                text = $"Init|{files[a].Replace('\\','/')}|{fileInBase64}\n";
             Console.WriteLine($"Versionando :  {text}");
             File.AppendAllText(fileDeltaBox, text);
         }

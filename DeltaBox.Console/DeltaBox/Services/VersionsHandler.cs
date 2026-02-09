@@ -44,10 +44,23 @@ public class VersionsHandler
         {
             var fileInBytePrevius = Convert.FromBase64String(result.Value);
             var folders = result.Key;
-            var segregationsFolders = folders.Split('\\').ToList();
-             var corte1 =
-               segregationsFolders
-                   .IndexOf(segregationsFolders.First(x=>x == Path.GetDirectoryName(pathFromFolder.Remove(0,2))));
+            var segregationsFolders = folders.Split(new[] { '/', '\\' }, StringSplitOptions.RemoveEmptyEntries)
+                .ToList();
+            int corte1=0;
+            if (OperatingSystem.IsWindows())
+            { 
+                corte1 =
+                    segregationsFolders
+                        .IndexOf(segregationsFolders.First(x=>x == Path.GetDirectoryName(pathFromFolder.Remove(0,2))));
+
+            }
+            else if (OperatingSystem.IsLinux()||OperatingSystem.IsMacOS())
+            { 
+                corte1 =
+                    segregationsFolders
+                        .IndexOf(segregationsFolders.First(x=>x == Path.GetDirectoryName(pathFromFolder)));
+
+            }
             var corte2=  segregationsFolders
                 .IndexOf(segregationsFolders.Last());
             var path = ".";
@@ -92,12 +105,10 @@ public class VersionsHandler
                 currentVersion = parts[1];
             }
         }
-        Console.WriteLine(versionFinish);
-        Console.WriteLine(currentVersion);
-
+        
         if (!versionFinish.Equals(currentVersion))
             return;
-        Console.WriteLine("teste");
+
         var result = new Dictionary<string, string>();
             
         foreach (var line in File.ReadLines(path+"/deltabox"))
