@@ -19,6 +19,7 @@ public class InitVersionHandler
             if (files.Any(x=>Path.GetFileName(x).Equals("deltabox")))
                 return false;
             
+            File.AppendAllText( pathFromFolder + "/deltabox",$"\nCurrentVersion|Init\n");
             File.AppendAllText( pathFromFolder + "/deltabox",$"\nInit|{DateTime.UtcNow}\n");
 
             SaveFilesOfDirectory(files,pathFromFolder);

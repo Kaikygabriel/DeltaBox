@@ -2,6 +2,7 @@ namespace DeltaBox.Services;
 
 public class VersionsHandler
 {
+    
     public static void GoToVersion1(string pathFromFolder, string versionName)
     {
         var files = Directory.GetFiles(pathFromFolder);
@@ -26,7 +27,7 @@ public class VersionsHandler
 
         if (results.Count <= 0)
             return ;
-        
+        VerifyAltersFile(files, pathFromFolder + "/deltabox", pathFromFolder);
         foreach (var file in files)
             if ( Path.GetFileName(file)!= "deltabox")
                 File.Delete(file);
@@ -62,10 +63,136 @@ public class VersionsHandler
 
             if (result.Key != "deltabox")
                 File.WriteAllBytes(result.Key,fileInBytePrevius);
-            
+
+            var lines = File.ReadLines(pathFromFolder + "/deltabox").ToList();
+            lines[0] = $"CurrentVersion|{versionName}";
+            File.WriteAllLines(pathFromFolder + "/deltabox", lines);
+
         }
     }
 
+    public static void VerifyAltersFile(IEnumerable<string>files,string deltaBoxFile,string path)
+    {
+        var versionFinish = "";
+        foreach (var line in File.ReadLines(path + "/deltabox"))
+        {
+            var parts = line.Split('|');
+            if (parts.Length == 2)
+            {
+                versionFinish = parts.First();
+            }
+        }
+
+        var currentVersion = "";
+        foreach (var line in File.ReadLines(path + "/deltabox"))
+        {
+            var parts = line.Split('|');
+            if (parts.Length == 2 && parts[0] == "CurrentVersion")
+            {
+                currentVersion = parts[1];
+            }
+        }
+        Console.WriteLine(versionFinish);
+        Console.WriteLine(currentVersion);
+
+        if (!versionFinish.Equals(currentVersion))
+            return;
+        Console.WriteLine("teste");
+        var result = new Dictionary<string, string>();
+            
+        foreach (var line in File.ReadLines(path+"/deltabox"))
+        {
+            var parts = line.Split('|');
+            if (parts.Length == 3 && parts[0].Equals(currentVersion,StringComparison.InvariantCultureIgnoreCase))
+            {
+                if (parts[0].Equals(currentVersion,StringComparison.InvariantCultureIgnoreCase))
+                {
+                    result.Add(parts[1],parts[2]);
+                }
+            }
+        }
+        var dictionaries = Directory.GetDirectories(
+            path,
+            "*",
+            SearchOption.AllDirectories);
+        
+        var fp = Directory.GetFiles(path);
+        foreach (var fileNew in fp)
+        {
+            byte[] currentContent = File.ReadAllBytes(fileNew);
+
+            var key = result.Keys.FirstOrDefault(x => x.Equals(fileNew));
+            string fileName = Path.GetFileName(fileNew);
+            if (key is not null)
+            {
+                var fileInBytePrevius = Convert.FromBase64String(result[key]);
+                if (!currentContent.SequenceEqual(fileInBytePrevius))
+                {
+                    if (!MessageIfAltersOrNewFiles())
+                    {
+                        break;
+                        return;
+                    }
+                }
+            }
+            else if (key is null && fileName != "deltabox")
+            {
+                if (!MessageIfAltersOrNewFiles())
+                    throw new Exception("Pending files: commit to save before reverting to a previous version.");
+            }
+        }
+
+        foreach (var d in dictionaries)
+        {
+            var filesPath = Directory.GetFiles(d);
+            foreach (var fileNew in filesPath)
+            {
+                byte[] currentContent = File.ReadAllBytes(fileNew);
+
+                var key = result.Keys.FirstOrDefault(x => x.Equals(fileNew));
+                string fileName = Path.GetFileName(fileNew);
+                if (key is not null)
+                {
+                    var fileInBytePrevius = Convert.FromBase64String(result[key]);
+                    if (!currentContent.SequenceEqual(fileInBytePrevius))
+                    {
+                        if (!MessageIfAltersOrNewFiles())
+                        {
+                            throw new Exception("Pending files: commit to save before reverting to a previous version.");
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                }
+                else if(key is null && fileName != "deltabox")
+                {
+                    if(!MessageIfAltersOrNewFiles())
+                        throw new Exception("Pending files: commit to save before reverting to a previous version.");
+                    else
+                    {
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+    private static bool MessageIfAltersOrNewFiles()
+    {
+        Console.WriteLine("Are you sure you want to change versions? There are unsaved files. [S] Yes or [N] No");
+        var response = Console.ReadLine();
+        if (response is null)
+            return false; 
+        if (response.Equals("s", StringComparison.CurrentCultureIgnoreCase))
+        {
+            return true;
+        }
+        
+        return false;
+    }
+    
     private static void RemoveFiles(string[] dictionaries,string pathFromFolder)
     {
         foreach (var subDictionary in dictionaries)

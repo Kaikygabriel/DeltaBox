@@ -12,20 +12,21 @@ public static class AltersFilesHandler
             return ;
         var result = new Dictionary<string, string>();
 
-        var currentVersion = "";
+        var versionFinish = "";
         foreach (var line in File.ReadLines(pathFromFolder + "/deltabox"))
         {
             var parts = line.Split('|');
-            if (parts.Length == 2)
+            if (parts.Length == 2 && parts[0] != "CurrentVersion")
             {
-                currentVersion = parts.First();
+                versionFinish = parts.First();
             }
         }
-        
+
+        Console.WriteLine(versionFinish);
         foreach (var line in File.ReadLines(pathFromFolder + "/deltabox"))
         {
             var parts = line.Split('|');
-            if (parts.Length >= 3 && parts.Contains(currentVersion) )
+            if (parts.Length >= 3 && parts.Contains(versionFinish) )
             {
                  result[parts[parts.Length-2]] = parts[parts.Length-1];
             }

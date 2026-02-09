@@ -1,3 +1,4 @@
+CurrentVersion|v2
 
 Init|08/02/2026 16:27:23
 Init|.\Sei\Iteste.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaTsNCg0KcHVibGljIGludGVyZmFjZSBJdGVzdGUNCnsNCiAgICB2b2lkIFRlc3RhcigpOw0KfQ==
@@ -14,3 +15,10 @@ v2|.\Sei\Entity\Abstraction\Entity.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaS5FbnRpdHkuQW
 v2|.\Sei\Entity\sub\d|
 v2|.\Sei\Entity\sub\subarquivo|b2xhIG11bmRvICEgbm92YW1lbnRl
 
+
+v3|09/02/2026 16:35:17
+v3|.\Sei\Iteste.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaTsNCg0KcHVibGljIGludGVyZmFjZSBJdGVzdGUNCnsNCiAgICB2b2lkIFRlc3RhcigpOw0KfQ==
+v3|.\Sei\Entity\Teste.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaS5FbnRpdHk7DQoNCnB1YmxpYyBjbGFzcyBUZXN0ZSA6IEFic3RyYWN0aW9uLkVudGl0eSxJdGVzdGUNCnsNCiAgICBwdWJsaWMgdm9pZCBUZXN0YXIoKQ0KICAgIHsNCiAgICAgICAgDQogICAgfQ0KfQ==
+v3|.\Sei\Entity\Abstraction\Entity.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaS5FbnRpdHkuQWJzdHJhY3Rpb247DQoNCnB1YmxpYyBhYnN0cmFjdCBjbGFzcyBFbnRpdHkNCnsNCiAgICBwdWJsaWMgR3VpZCBJZCB7IGdldDsgaW5pdDsgfQ0KfQ==
+v3|.\Sei\Entity\sub\d|YWJjZA==
+v3|.\Sei\Entity\sub\subarquivo|b2xhIG11bmRvICEgbm92YW1lbnRl
