@@ -80,4 +80,3 @@ Pensamento arquitetural inspirado em sistemas reais (Git)
 🚧 Status do Projeto
 
 🟡 Em desenvolvimento ativo
-Atualmente em fase de ajustes finais para garantir portabilidade completa entre sistemas operacionais.
