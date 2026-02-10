@@ -73,7 +73,12 @@ public class VersionsHandler
             }
 
             if (result.Key != "deltabox")
-                File.WriteAllBytes(result.Key,fileInBytePrevius);
+            {
+                if(OperatingSystem.IsLinux() || OperatingSystem.IsMacOS())
+                    File.WriteAllBytes(result.Key.Replace('\\','/'),fileInBytePrevius);
+                else
+                    File.WriteAllBytes(result.Key,fileInBytePrevius);
+            }
 
             var lines = File.ReadLines(pathFromFolder + "/deltabox").ToList();
             lines[0] = $"CurrentVersion|{versionName}";
