@@ -1,20 +1,19 @@
-using System.Text;
+using DeltaBox.Commum;
 
 namespace DeltaBox.Services;
 
 public class AddVersionsHandler
 {
-    public bool Create(string pathOfFiles,string nameVersion)
+    public Result Create(string pathOfFiles,string nameVersion)
     {
-        AddNewVersion(pathOfFiles,nameVersion);
-        return true;
+        return AddNewVersion(pathOfFiles,nameVersion);
     }
 
-    private bool AddNewVersion(string pathFromFolder,string nameVersion)
+    private Result AddNewVersion(string pathFromFolder,string nameVersion)
     {
         var files = Directory.GetFiles(pathFromFolder);
         if (!files.Any(x => Path.GetFileName(x) == "deltabox"))
-            return false;
+            return Error.DeltaBoxNotFound();
         var result = new Dictionary<string, string>();
 
         foreach (var line in File.ReadLines(pathFromFolder + "/deltabox"))
@@ -39,7 +38,11 @@ public class AddVersionsHandler
             UpdateFilesInDeltaBox(Directory.GetFiles(subDictionary), result, nameVersion, pathFromFolder);
         }  
         
-        return true;
+        var lines = File.ReadLines(pathFromFolder + "/deltabox").ToList();
+        lines[0] = $"CurrentVersion|{nameVersion}";
+        File.WriteAllLines(pathFromFolder + "/deltabox", lines);
+
+        return Result.Success();
     }
 
     private void UpdateFilesInDeltaBox(string[] files,Dictionary<string, string>result,string nameVersion,string pathFromFolder)
@@ -58,6 +61,9 @@ public class AddVersionsHandler
                 if (!currentContent.SequenceEqual(fileInBytePrevius))
                 {
                     var text = $"{nameVersion}|{filePath}|{Convert.ToBase64String(currentContent)}\n";
+                    if (OperatingSystem.IsLinux()|| OperatingSystem.IsMacOS())
+                        text = $"{nameVersion}|{filePath.Replace('\\','/')}|{Convert.ToBase64String(currentContent)}\n";
+
                     Console.WriteLine($"Versionando : {text} ");
                     File.AppendAllText(pathFromFolder + "/deltabox", text);
                 }
@@ -74,6 +80,6 @@ public class AddVersionsHandler
                 File.AppendAllText(pathFromFolder + "/deltabox", text);
             }
         }
-
+        
     }
 }

@@ -1,17 +1,21 @@
+using DeltaBox.Commum;
+
 namespace DeltaBox.Services;
 
 public class GetVersionsHandler
 {
-    public static void Get(string pathFromFolder)
+    public Result Get(string pathFromFolder)
     {
         Console.WriteLine(" \nVersions :\n");
 
         if (!Directory.Exists(pathFromFolder))
-            return ;
+            return Error.DirectoryNotFound() ;
+        
         var files = Directory.GetFiles(pathFromFolder);
         var deltaBoxFile = files.FirstOrDefault(x => Path.GetFileName(x).Equals("deltabox"));
+        
         if (deltaBoxFile is null)
-            return ;
+            return Error.DeltaBoxNotFound();
         foreach (var line in File.ReadLines(deltaBoxFile))
         {
             var parts = line.Split('|');
@@ -20,5 +24,7 @@ public class GetVersionsHandler
                 Console.WriteLine($"\t{parts[0]} - {parts[1]}");
             }
         }
+
+        return Result.Success();
     }
 }

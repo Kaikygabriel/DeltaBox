@@ -1,15 +1,15 @@
+using DeltaBox.Commum;
+
 namespace DeltaBox.Services;
 
 public class VersionsHandler
 {
     
-    public static void GoToVersion1(string pathFromFolder, string versionName)
+    public Result GoToVersion(string pathFromFolder, string versionName)
     {
         var files = Directory.GetFiles(pathFromFolder);
         if (!files.Any(x => Path.GetFileName(x) == "deltabox"))
-        { 
-            return;
-        } 
+            return Error.DeltaBoxNotFound();
         
         var results = new Dictionary<string, string>();
             
@@ -26,7 +26,7 @@ public class VersionsHandler
         }
 
         if (results.Count <= 0)
-            return ;
+            return new Error("Version.NotFound","Version not found!");
         VerifyAltersFile(files, pathFromFolder + "/deltabox", pathFromFolder);
         foreach (var file in files)
             if ( Path.GetFileName(file)!= "deltabox")
@@ -34,8 +34,6 @@ public class VersionsHandler
         
         var dictionaries = Directory.GetDirectories(
             pathFromFolder);
-        foreach(var d in dictionaries)
-            Console.WriteLine(d);
         
         if (dictionaries.Length > 0)
             RemoveFiles(dictionaries, pathFromFolder);
@@ -80,11 +78,13 @@ public class VersionsHandler
             var lines = File.ReadLines(pathFromFolder + "/deltabox").ToList();
             lines[0] = $"CurrentVersion|{versionName}";
             File.WriteAllLines(pathFromFolder + "/deltabox", lines);
-
+    
         }
+
+        return Result.Success();
     }
 
-    public static void VerifyAltersFile(IEnumerable<string>files,string deltaBoxFile,string path)
+    public void VerifyAltersFile(IEnumerable<string>files,string deltaBoxFile,string path)
     {
         var versionFinish = "";
         foreach (var line in File.ReadLines(path + "/deltabox"))
@@ -190,7 +190,7 @@ public class VersionsHandler
         }
     }
 
-    private static bool MessageIfAltersOrNewFiles()
+    private bool MessageIfAltersOrNewFiles()
     {
         Console.WriteLine("Are you sure you want to change versions? There are unsaved files. [S] Yes or [N] No");
         var response = Console.ReadLine();
@@ -204,7 +204,7 @@ public class VersionsHandler
         return false;
     }
     
-    private static void RemoveFiles(string[] dictionaries,string pathFromFolder)
+    private void RemoveFiles(string[] dictionaries,string pathFromFolder)
     {
         foreach (var subDictionary in dictionaries)
         {

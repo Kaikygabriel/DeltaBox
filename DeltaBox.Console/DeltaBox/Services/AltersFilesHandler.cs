@@ -1,15 +1,16 @@
 using System.Security.Cryptography;
+using DeltaBox.Commum;
 
 namespace DeltaBox.Services;
 
-public static class AltersFilesHandler
+public class AltersFilesHandler
 {
     
-    public static void ViewAltersFiles(string pathFromFolder)
+    public Result ViewAltersFiles(string pathFromFolder)
     {
         var files = Directory.GetFiles(pathFromFolder);
         if (!files.Any(x => Path.GetFileName(x) == "deltabox"))
-            return ;
+            return Error.DeltaBoxNotFound();
         var result = new Dictionary<string, string>();
 
         var versionFinish = "";
@@ -38,8 +39,10 @@ public static class AltersFilesHandler
         Console.WriteLine("\n     New Files  :\n");
         GetNewFiles(files, result);
         ActiveGetNewInSubDictionary(Directory.GetDirectories(pathFromFolder), result);
+
+        return Result.Success();
     }
-    private static void ActiveGetNewInSubDictionary(IEnumerable<string> dictionaries,Dictionary<string, string> result)
+    private void ActiveGetNewInSubDictionary(IEnumerable<string> dictionaries,Dictionary<string, string> result)
     {
         foreach (var d in dictionaries)
         {
@@ -49,7 +52,7 @@ public static class AltersFilesHandler
                 ActiveGetNewInSubDictionary(subSubDictionaries,result);
         }
     }
-    private static void ActiveGetModifiedInSubDictionary(IEnumerable<string> dictionaries,Dictionary<string, string> result)
+    private void ActiveGetModifiedInSubDictionary(IEnumerable<string> dictionaries,Dictionary<string, string> result)
     {
         foreach (var d in dictionaries)
         {
@@ -59,7 +62,7 @@ public static class AltersFilesHandler
                 ActiveGetModifiedInSubDictionary(subSubDictionaries,result);
         }
     }
-    private static void GetModifiedFiles(IEnumerable<string> files,Dictionary<string, string> result)
+    private void GetModifiedFiles(IEnumerable<string> files,Dictionary<string, string> result)
     {
         foreach (var filePath in files)
         {
@@ -80,7 +83,7 @@ public static class AltersFilesHandler
             }
         }
     }
-    private static void GetNewFiles(IEnumerable<string> files,Dictionary<string, string> result)
+    private void GetNewFiles(IEnumerable<string> files,Dictionary<string, string> result)
     {
         foreach (var filePath in files)
         {

@@ -1,17 +1,19 @@
+using DeltaBox.Commum;
+
 namespace DeltaBox.Services;
 
 public class RemoveVersionHandler
 {
-    public static void RemoveVersion(string pathFromFolder, string nameVersion)
+    public Result RemoveVersion(string pathFromFolder, string nameVersion)
     {
         if (!Directory.Exists(pathFromFolder))
-            return ;
+            return Error.DirectoryNotFound() ;
         
         var files = Directory.GetFiles(pathFromFolder);
         var deltaBoxFile = files.FirstOrDefault(x => Path.GetFileName(x).Equals("deltabox"));
         
         if (deltaBoxFile is null)
-            return ;
+            return Error.DeltaBoxNotFound();
         
         var linesInDelta = File.ReadLines(deltaBoxFile).ToList();
         foreach (var line in File.ReadLines(deltaBoxFile))
@@ -22,5 +24,33 @@ public class RemoveVersionHandler
         }
         File.WriteAllLines(deltaBoxFile, linesInDelta);
 
+        var versionFinish = "";
+        foreach (var line in File.ReadLines(deltaBoxFile))
+        {
+            var parts = line.Split('|');
+            if (parts.Length == 2)
+            {
+                versionFinish = parts.First();
+            }
+        }
+        UpdateCurrentVersion(deltaBoxFile);
+        
+        return Result.Success();
+    }
+
+    private void UpdateCurrentVersion(string deltaBoxFile)
+    {
+        var versionFinish = "";
+        foreach (var line in File.ReadLines(deltaBoxFile))
+        {
+            var parts = line.Split('|');
+            if (parts.Length == 2)
+            {
+                versionFinish = parts.First();
+            }
+        }
+        var lines = File.ReadLines(deltaBoxFile).ToList();
+        lines[0] = $"CurrentVersion|{versionFinish}";
+        File.WriteAllLines(deltaBoxFile, lines);
     }
 }

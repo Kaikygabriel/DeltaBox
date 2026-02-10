@@ -1,4 +1,4 @@
-CurrentVersion|v4
+CurrentVersion|v6
 
 Init|08/02/2026 16:27:23
 Init|./Sei/Iteste.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaTsNCg0KcHVibGljIGludGVyZmFjZSBJdGVzdGUNCnsNCiAgICB2b2lkIFRlc3RhcigpOw0KfQ==
@@ -22,4 +22,17 @@ v3|./Sei/Entity/Teste.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaS5FbnRpdHk7DQoNCnB1YmxpYyB
 v3|./Sei/Entity/Abstraction/Entity.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaS5FbnRpdHkuQWJzdHJhY3Rpb247DQoNCnB1YmxpYyBhYnN0cmFjdCBjbGFzcyBFbnRpdHkNCnsNCiAgICBwdWJsaWMgR3VpZCBJZCB7IGdldDsgaW5pdDsgfQ0KfQ==
 v3|./Sei/Entity/sub/d|YWJjZA==
 v3|./Sei/Entity/sub/subarquivo|b2xhIG11bmRvICEgbm92YW1lbnRl
+
+
+v4|10/02/2026 14:56:15
+v4|.\Sei\Iteste.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaTsNCg0KcHVibGljIGludGVyZmFjZSBJdGVzdGUNCnsNCiAgICB2b2lkIFRlc3RhcigpOw0KfQ==
+v4|.\Sei\Entity\Teste.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaS5FbnRpdHk7DQoNCnB1YmxpYyBjbGFzcyBUZXN0ZSA6IEFic3RyYWN0aW9uLkVudGl0eSxJdGVzdGUNCnsNCiAgICBwdWJsaWMgdm9pZCBUZXN0YXIoKQ0KICAgIHsNCiAgICAgICAgDQogICAgfQ0KfQ==
+v4|.\Sei\Entity\Abstraction\Entity.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaS5FbnRpdHkuQWJzdHJhY3Rpb247DQoNCnB1YmxpYyBhYnN0cmFjdCBjbGFzcyBFbnRpdHkNCnsNCiAgICBwdWJsaWMgR3VpZCBJZCB7IGdldDsgaW5pdDsgfQ0KfQ==
+v4|.\Sei\Entity\sub\subarquivo|b2xhIG11bmRvICEgbm92YW1lbnRl
+
+v5|10/02/2026 15:50:53
+v5|.\Sei\Iteste.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaTsNCg0KcHVibGljIGludGVyZmFjZSBJVGVzdGUNCnsNCiAgICB2b2lkIFRlc3RhcigpOy8vdGEgZGFuZG8gY2VydG8NCn0=
+v5|.\Sei\Entity\Teste.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaS5FbnRpdHk7DQoNCnB1YmxpYyBjbGFzcyBUZXN0ZSA6IEFic3RyYWN0aW9uLkVudGl0eSxJVGVzdGUNCnsNCiAgICBwdWJsaWMgdm9pZCBUZXN0YXIoKQ0KICAgIHsNCiAgICAgICAgDQogICAgfQ0KfQ==
+v5|.\Sei\Entity\Abstraction\Entity.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaS5FbnRpdHkuQWJzdHJhY3Rpb247DQoNCnB1YmxpYyBhYnN0cmFjdCBjbGFzcyBFbnRpdHkNCnsNCiAgICBwdWJsaWMgR3VpZCBJZCB7IGdldDsgaW5pdDsgfQ0KfQ==
+v5|.\Sei\Entity\sub\subarquivo|b2xhIG11bmRvICEgbm92YW1lbnRl
 

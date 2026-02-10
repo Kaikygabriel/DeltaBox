@@ -1,46 +1,40 @@
+using DeltaBox.Commum;
+
 namespace DeltaBox.Services;
 
 public class InitVersionHandler
 {
-    public bool Create(string pathOfFiles)
+    public Result Create(string pathOfFiles)
     {
-        TryInitVersionInFolder(pathOfFiles);
-        return true;
+        return InitVersionInFolder(pathOfFiles);
     }
 
-    private bool TryInitVersionInFolder(string pathFromFolder)
+    private Result InitVersionInFolder(string pathFromFolder)
     {
-        try
-        {
-            if (!Directory.Exists(pathFromFolder))
-                return false;
-            var files = Directory.GetFiles(pathFromFolder);
-            
-            if (files.Any(x=>Path.GetFileName(x).Equals("deltabox")))
-                return false;
-            
-            File.AppendAllText( pathFromFolder + "/deltabox",$"\nCurrentVersion|Init\n");
-            File.AppendAllText( pathFromFolder + "/deltabox",$"\nInit|{DateTime.UtcNow}\n");
+        if (!Directory.Exists(pathFromFolder))
+            return Error.DirectoryNotFound();
+        var files = Directory.GetFiles(pathFromFolder);
 
-            SaveFilesOfDirectory(files,pathFromFolder);
-            
-            var dictionaries = Directory.GetDirectories(
-                pathFromFolder,
-                "*",
-                SearchOption.AllDirectories);
+        if (files.Any(x => Path.GetFileName(x).Equals("deltabox")))
+            return new Error("DeltaBox.AlreadyExists", "File deltabox already exists!");
 
-            foreach (var subDictionary in dictionaries)
-            {
-                var filesInSubDictionary = Directory.GetFiles(subDictionary);
-                SaveFilesOfDirectory(filesInSubDictionary,pathFromFolder);
-            }  
-          
-            return true;
-        }
-        catch (Exception e)
+        File.AppendAllText(pathFromFolder + "/deltabox", $"\nCurrentVersion|Init\n");
+        File.AppendAllText(pathFromFolder + "/deltabox", $"\nInit|{DateTime.UtcNow}\n");
+
+        SaveFilesOfDirectory(files, pathFromFolder);
+
+        var dictionaries = Directory.GetDirectories(
+            pathFromFolder,
+            "*",
+            SearchOption.AllDirectories);
+
+        foreach (var subDictionary in dictionaries)
         {
-            return false;
+            var filesInSubDictionary = Directory.GetFiles(subDictionary);
+            SaveFilesOfDirectory(filesInSubDictionary, pathFromFolder);
         }
+
+        return Result.Success();
     }
 
     private void SaveFilesOfDirectory(string[] files,string pathFromFolder)
