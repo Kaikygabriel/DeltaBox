@@ -1,6 +1,6 @@
 namespace DeltaBox.Sei.Entity;
 
-public class Teste : Iteste
+public class Teste : Abstraction.Entity,Iteste
 {
     public void Testar()
     {

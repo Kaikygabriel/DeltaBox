@@ -1,4 +1,3 @@
-📘 README — DeltaBox
 🚀 O que é o DeltaBox?
 
 O DeltaBox é um sistema de versionamento local desenvolvido em .NET, criado para registrar, comparar e restaurar versões de arquivos e diretórios de forma simples e eficiente.

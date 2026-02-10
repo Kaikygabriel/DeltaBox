@@ -67,6 +67,9 @@ public class AddVersionsHandler
                 byte[] content = File.ReadAllBytes(filePath);
                 var fileInBase64 = Convert.ToBase64String(content);
                 var text = $"{nameVersion}|{filePath}|{fileInBase64}\n";
+                if (OperatingSystem.IsLinux()|| OperatingSystem.IsMacOS())
+                    text = $"{nameVersion}|{filePath.Replace('\\','/')}|{fileInBase64}\n";
+                
                 Console.WriteLine($"Versionando : {text} ");
                 File.AppendAllText(pathFromFolder + "/deltabox", text);
             }
