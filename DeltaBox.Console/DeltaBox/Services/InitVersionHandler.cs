@@ -1,12 +1,13 @@
+using DeltaBox.Abstraction;
 using DeltaBox.Commum;
 
 namespace DeltaBox.Services;
 
-public class InitVersionHandler
+public class InitVersionHandler : ICommand
 {
-    public Result Create(string pathOfFiles)
+    public Result Execute(CommandContext ctx)
     {
-        return InitVersionInFolder(pathOfFiles);
+        return InitVersionInFolder(ctx.Folder);
     }
 
     private Result InitVersionInFolder(string pathFromFolder)
@@ -51,4 +52,6 @@ public class InitVersionHandler
             File.AppendAllText(fileDeltaBox, text);
         }
     }
+
+    
 }

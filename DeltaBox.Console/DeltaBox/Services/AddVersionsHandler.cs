@@ -1,14 +1,19 @@
+using DeltaBox.Abstraction;
 using DeltaBox.Commum;
 
 namespace DeltaBox.Services;
 
-public class AddVersionsHandler
+public class AddVersionsHandler : ICommand
 {
-    public Result Create(string pathOfFiles,string nameVersion)
+    
+    public Result Execute(CommandContext ctx)
     {
-        return AddNewVersion(pathOfFiles,nameVersion);
-    }
+        if (ctx.Args[2] is null)
+            return new Error("Command.Invalid", "INVALID COMMAND");
 
+        return AddNewVersion(ctx.Folder, ctx.Args[2]);
+    }
+    
     private Result AddNewVersion(string pathFromFolder,string nameVersion)
     {
         var files = Directory.GetFiles(pathFromFolder);
@@ -82,4 +87,6 @@ public class AddVersionsHandler
         }
         
     }
+
+   
 }

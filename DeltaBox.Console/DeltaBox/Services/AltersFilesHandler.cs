@@ -1,11 +1,16 @@
 using System.Security.Cryptography;
+using DeltaBox.Abstraction;
 using DeltaBox.Commum;
 
 namespace DeltaBox.Services;
 
-public class AltersFilesHandler
+public class AltersFilesHandler : ICommand
 {
     
+    public Result Execute(CommandContext ctx)
+    {
+        return ViewAltersFiles(ctx.Folder);
+    }
     public Result ViewAltersFiles(string pathFromFolder)
     {
         var files = Directory.GetFiles(pathFromFolder);

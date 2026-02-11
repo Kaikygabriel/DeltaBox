@@ -1,8 +1,9 @@
+using DeltaBox.Abstraction;
 using DeltaBox.Commum;
 
 namespace DeltaBox.Services;
 
-public class GetVersionsHandler
+public class GetVersionsHandler : ICommand
 {
     public Result Get(string pathFromFolder)
     {
@@ -26,5 +27,10 @@ public class GetVersionsHandler
         }
 
         return Result.Success();
+    }
+
+    public Result Execute(CommandContext ctx)
+    {
+        return Get(ctx.Folder);
     }
 }

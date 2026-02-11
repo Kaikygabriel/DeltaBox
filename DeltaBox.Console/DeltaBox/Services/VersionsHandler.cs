@@ -1,9 +1,11 @@
+using DeltaBox.Abstraction;
 using DeltaBox.Commum;
 
 namespace DeltaBox.Services;
 
-public class VersionsHandler
+public class VersionsHandler : ICommand
 {
+    
     
     public Result GoToVersion(string pathFromFolder, string versionName)
     {
@@ -231,5 +233,13 @@ public class VersionsHandler
                     Directory.Delete(subDictionary);    
             }
         } 
+    }
+
+
+    public Result Execute(CommandContext ctx)
+    {
+        if (ctx.Args[2] is null)
+            return Error.CommandInvalid();
+        return GoToVersion(ctx.Folder, ctx.Args[2]);
     }
 }

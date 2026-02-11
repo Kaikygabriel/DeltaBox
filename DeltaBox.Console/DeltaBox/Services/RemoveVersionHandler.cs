@@ -1,9 +1,17 @@
+using DeltaBox.Abstraction;
 using DeltaBox.Commum;
 
 namespace DeltaBox.Services;
 
-public class RemoveVersionHandler
+public class RemoveVersionHandler : ICommand
 {
+    public Result Execute(CommandContext ctx)
+    {
+        if (ctx.Args[2] is null)
+            return Error.CommandInvalid();
+        return RemoveVersion(ctx.Folder,ctx.Args[2]);
+    }
+    
     public Result RemoveVersion(string pathFromFolder, string nameVersion)
     {
         if (!Directory.Exists(pathFromFolder))
@@ -53,4 +61,6 @@ public class RemoveVersionHandler
         lines[0] = $"CurrentVersion|{versionFinish}";
         File.WriteAllLines(deltaBoxFile, lines);
     }
+
+   
 }
