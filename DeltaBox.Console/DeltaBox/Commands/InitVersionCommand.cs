@@ -1,9 +1,9 @@
 using DeltaBox.Abstraction;
 using DeltaBox.Commum;
 
-namespace DeltaBox.Services;
+namespace DeltaBox.Commands;
 
-public class InitVersionHandler : ICommand
+public class InitVersionCommand : ICommand
 {
     public Result Execute(CommandContext ctx)
     {
@@ -20,7 +20,11 @@ public class InitVersionHandler : ICommand
             return new Error("DeltaBox.AlreadyExists", "File deltabox already exists!");
 
         File.AppendAllText(pathFromFolder + "/deltabox", $"\nCurrentVersion|Init\n");
-        File.AppendAllText(pathFromFolder + "/deltabox", $"\nInit|{DateTime.UtcNow}\n");
+        
+        File.AppendAllText(pathFromFolder + "/deltabox", $"\nBranchCurrent|main\n");
+        File.AppendAllText(pathFromFolder + "/deltabox", $"\nBranch|main|\n");
+        
+        File.AppendAllText(pathFromFolder + "/deltabox", $"\nmain|Init|{DateTime.UtcNow}\n");
 
         SaveFilesOfDirectory(files, pathFromFolder);
 
@@ -45,9 +49,9 @@ public class InitVersionHandler : ICommand
         {
             byte[] content = File.ReadAllBytes(files[a]);
             var fileInBase64 = Convert.ToBase64String(content);
-            var text = $"Init|{files[a]}|{fileInBase64}\n";
+            var text = $"main|Init|{files[a]}|{fileInBase64}\n";
             if (OperatingSystem.IsLinux() || OperatingSystem.IsMacOS())
-                text = $"Init|{files[a].Replace('\\','/')}|{fileInBase64}\n";
+                text = $"main|Init|{files[a].Replace('\\','/')}|{fileInBase64}\n";
             Console.WriteLine($"Versionando :  {text}");
             File.AppendAllText(fileDeltaBox, text);
         }

@@ -1,12 +1,10 @@
 using DeltaBox.Abstraction;
 using DeltaBox.Commum;
 
-namespace DeltaBox.Services;
+namespace DeltaBox.Commands;
 
-public class VersionsHandler : ICommand
+public class VersionsCommand : ICommand
 {
-    
-    
     public Result GoToVersion(string pathFromFolder, string versionName)
     {
         var files = Directory.GetFiles(pathFromFolder);
@@ -18,12 +16,9 @@ public class VersionsHandler : ICommand
         foreach (var line in File.ReadLines(pathFromFolder+"/deltabox"))
         {
             var parts = line.Split('|');
-            if (parts.Length == 3 && parts[0].Equals(versionName,StringComparison.InvariantCultureIgnoreCase))
+            if (parts.Length == 4 && parts[1].Equals(versionName,StringComparison.InvariantCultureIgnoreCase))
             {
-                if (parts[0].Equals(versionName,StringComparison.InvariantCultureIgnoreCase))
-                {
-                    results.Add(parts[1],parts[2]);
-                }
+                results.Add(parts[2],parts[3]);
             }
         }
 
@@ -121,12 +116,9 @@ public class VersionsHandler : ICommand
         foreach (var line in File.ReadLines(path+"/deltabox"))
         {
             var parts = line.Split('|');
-            if (parts.Length == 3 && parts[0].Equals(currentVersion,StringComparison.InvariantCultureIgnoreCase))
+            if (parts.Length == 4 && parts[1].Equals(currentVersion,StringComparison.InvariantCultureIgnoreCase))
             {
-                if (parts[0].Equals(currentVersion,StringComparison.InvariantCultureIgnoreCase))
-                {
-                    result.Add(parts[1],parts[2]);
-                }
+                result.Add(parts[2],parts[3]);
             }
         }
         var dictionaries = Directory.GetDirectories(

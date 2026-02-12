@@ -1,9 +1,9 @@
 using DeltaBox.Abstraction;
 using DeltaBox.Commum;
 
-namespace DeltaBox.Services;
+namespace DeltaBox.Commands;
 
-public class RemoveVersionHandler : ICommand
+public class RemoveVersionCommand : ICommand
 {
     public Result Execute(CommandContext ctx)
     {
@@ -18,7 +18,7 @@ public class RemoveVersionHandler : ICommand
             return Error.DirectoryNotFound() ;
         
         var files = Directory.GetFiles(pathFromFolder);
-        var deltaBoxFile = files.FirstOrDefault(x => Path.GetFileName(x).Equals("deltabox"));
+        var deltaBoxFile = files.FirstOrDefault(x => Path.GetFileName(x).Equals("deltabox")) ?? throw new Exception("NÂO ACHOU O ARQUIVO ");
         
         if (deltaBoxFile is null)
             return Error.DeltaBoxNotFound();
@@ -27,8 +27,11 @@ public class RemoveVersionHandler : ICommand
         foreach (var line in File.ReadLines(deltaBoxFile))
         {
             var parts = line.Split('|');
-            if (parts[0].Equals(nameVersion, StringComparison.CurrentCultureIgnoreCase))
-                linesInDelta.Remove(line);
+            if (parts.Length >= 2)
+            {
+                if (parts[1].Equals(nameVersion, StringComparison.CurrentCultureIgnoreCase))
+                    linesInDelta.Remove(line);      
+            }
         }
         File.WriteAllLines(deltaBoxFile, linesInDelta);
 
@@ -36,7 +39,7 @@ public class RemoveVersionHandler : ICommand
         foreach (var line in File.ReadLines(deltaBoxFile))
         {
             var parts = line.Split('|');
-            if (parts.Length == 2)
+            if (parts.Length == 2&& parts[0]!="BranchCurrent")
             {
                 versionFinish = parts.First();
             }
@@ -52,7 +55,7 @@ public class RemoveVersionHandler : ICommand
         foreach (var line in File.ReadLines(deltaBoxFile))
         {
             var parts = line.Split('|');
-            if (parts.Length == 2)
+            if (parts.Length == 2 && parts[0]!="BranchCurrent")
             {
                 versionFinish = parts.First();
             }

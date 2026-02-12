@@ -1,9 +1,9 @@
 using DeltaBox.Abstraction;
 using DeltaBox.Commum;
 
-namespace DeltaBox.Services;
+namespace DeltaBox.Commands;
 
-public class GetVersionsHandler : ICommand
+public class GetVersionsCommand : ICommand
 {
     public Result Get(string pathFromFolder)
     {
@@ -17,15 +17,20 @@ public class GetVersionsHandler : ICommand
         
         if (deltaBoxFile is null)
             return Error.DeltaBoxNotFound();
+        var branchCurrent = "";
         foreach (var line in File.ReadLines(deltaBoxFile))
         {
             var parts = line.Split('|');
-            if (parts.Length == 2)
+            if (parts.Length == 2 && parts[0] != "BranchCurrent")
             {
                 Console.WriteLine($"\t{parts[0]} - {parts[1]}");
             }
+
+            if (parts[0] == "BranchCurrent")
+                branchCurrent = parts[1];
         }
 
+        Console.WriteLine($"BRANCH : {branchCurrent}");
         return Result.Success();
     }
 

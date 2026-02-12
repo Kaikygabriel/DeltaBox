@@ -1,10 +1,9 @@
-using System.Security.Cryptography;
 using DeltaBox.Abstraction;
 using DeltaBox.Commum;
 
-namespace DeltaBox.Services;
+namespace DeltaBox.Commands;
 
-public class AltersFilesHandler : ICommand
+public class AltersFilesCommand : ICommand
 {
     
     public Result Execute(CommandContext ctx)
@@ -18,23 +17,30 @@ public class AltersFilesHandler : ICommand
             return Error.DeltaBoxNotFound();
         var result = new Dictionary<string, string>();
 
+        var branchCurrent = "";
         var versionFinish = "";
-        foreach (var line in File.ReadLines(pathFromFolder + "/deltabox"))
+        
+        var lines = File.ReadLines(pathFromFolder + "/deltabox");
+        foreach (var line in lines)
         {
             var parts = line.Split('|');
-            if (parts.Length == 2 && parts[0] != "CurrentVersion")
+            if (parts.Length >= 4 && parts[0] != "CurrentVersion"&& parts[0] != "BranchCurrent")
             {
-                versionFinish = parts.First();
+                versionFinish = parts[1];
+            }
+
+            if (parts[0] == "BranchCurrent")
+            {
+                branchCurrent = parts[1];
             }
         }
-
-        Console.WriteLine(versionFinish);
+        
         foreach (var line in File.ReadLines(pathFromFolder + "/deltabox"))
         {
             var parts = line.Split('|');
-            if (parts.Length >= 3 && parts.Contains(versionFinish) )
-            {
-                 result[parts[parts.Length-2]] = parts[parts.Length-1];
+            if (parts.Length >= 4 && parts[1].Equals(versionFinish) && parts[0].Equals(branchCurrent))
+            { 
+                 result[parts[2]] = parts[3];
             }
         }
     

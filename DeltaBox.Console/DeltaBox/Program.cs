@@ -1,6 +1,6 @@
 ﻿using DeltaBox.Abstraction;
+using DeltaBox.Commands;
 using DeltaBox.Commum;
-using DeltaBox.Services;
 using DeltaBox.View;
 
 var folder = args[1] ?? throw new Exception("Method Invalid");
@@ -8,12 +8,12 @@ var method = args[0]?? throw new Exception("Method Invalid");
 
 var commands = new Dictionary<string, ICommand>(StringComparer.OrdinalIgnoreCase)
 {
-    ["init"] = new InitVersionHandler(),
-    ["previus"] = new VersionsHandler(),
-    ["status"] = new AltersFilesHandler(),
-    ["commit"] = new AddVersionsHandler(),
-    ["log"] = new GetVersionsHandler(),
-    ["remove"] = new RemoveVersionHandler(),
+    ["init"] = new InitVersionCommand(),
+    ["previus"] = new VersionsCommand(),
+    ["status"] = new AltersFilesCommand(),
+    ["commit"] = new AddVersionsCommand(),
+    ["log"] = new GetVersionsCommand(),
+    ["remove"] = new RemoveVersionCommand()
 };
 
 if (!commands.TryGetValue(method, out var command))
