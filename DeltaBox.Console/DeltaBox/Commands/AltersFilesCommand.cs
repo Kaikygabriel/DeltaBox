@@ -24,14 +24,18 @@ public class AltersFilesCommand : ICommand
         foreach (var line in lines)
         {
             var parts = line.Split('|');
-            if (parts.Length >= 4 && parts[0] != "CurrentVersion"&& parts[0] != "BranchCurrent")
-            {
-                versionFinish = parts[1];
-            }
 
             if (parts[0] == "BranchCurrent")
             {
                 branchCurrent = parts[1];
+            }
+        }
+        foreach (var line in lines)
+        {
+            var parts = line.Split('|');
+            if (parts.Length >= 4 && parts[0].Equals(branchCurrent))
+            {
+                versionFinish = parts[1];
             }
         }
         
@@ -43,13 +47,15 @@ public class AltersFilesCommand : ICommand
                  result[parts[2]] = parts[3];
             }
         }
-    
+
         Console.WriteLine("\n     Files Changes :\n");
         GetModifiedFiles(files, result);
         ActiveGetModifiedInSubDictionary(Directory.GetDirectories(pathFromFolder), result);
         Console.WriteLine("\n     New Files  :\n");
         GetNewFiles(files, result);
         ActiveGetNewInSubDictionary(Directory.GetDirectories(pathFromFolder), result);
+        Console.WriteLine($"\n Current Version : {versionFinish}");
+        Console.WriteLine($"\n Current Branch :  {branchCurrent}");
 
         return Result.Success();
     }
@@ -81,7 +87,7 @@ public class AltersFilesCommand : ICommand
 
             var key = result.Keys.FirstOrDefault(x => x.Equals(filePath));
             string fileName = Path.GetFileName(filePath);
-            if (key is not null)
+            if (!string.IsNullOrEmpty(key))
             {
                 var fileInBytePrevius = Convert.FromBase64String(result[key]);
                 if (!currentContent.SequenceEqual(fileInBytePrevius))
@@ -100,10 +106,11 @@ public class AltersFilesCommand : ICommand
         {
             byte[] currentContent = File.ReadAllBytes(filePath);
 
-            var key = result.Keys.FirstOrDefault(x => x.Equals(filePath));
+            var key = result.Keys.Any(x => x.Equals(filePath));
+            
             string fileName = Path.GetFileName(filePath);
             
-            if(key is null && fileName != "deltabox")
+            if(!key && fileName != "deltabox")
             {
                 var currentTextColor = Console.ForegroundColor;
                 Console.ForegroundColor = ConsoleColor.Green;

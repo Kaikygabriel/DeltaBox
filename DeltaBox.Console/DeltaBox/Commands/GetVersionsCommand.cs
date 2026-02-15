@@ -18,18 +18,23 @@ public class GetVersionsCommand : ICommand
         if (deltaBoxFile is null)
             return Error.DeltaBoxNotFound();
         var branchCurrent = "";
-        foreach (var line in File.ReadLines(deltaBoxFile))
+
+        var deltabox = File.ReadLines(deltaBoxFile);
+        foreach (var line in deltabox)
         {
             var parts = line.Split('|');
-            if (parts.Length == 2 && parts[0] != "BranchCurrent")
-            {
-                Console.WriteLine($"\t{parts[0]} - {parts[1]}");
-            }
 
             if (parts[0] == "BranchCurrent")
                 branchCurrent = parts[1];
         }
-
+        foreach (var line in deltabox)
+        {
+            var parts = line.Split('|');
+            if (parts.Length == 3 && parts[0] != "BranchCurrent"&& parts[0].Equals(branchCurrent))
+            {
+                Console.WriteLine($"\t{parts[0]} - {parts[1]}");
+            }
+        }
         Console.WriteLine($"BRANCH : {branchCurrent}");
         return Result.Success();
     }

@@ -11,6 +11,17 @@ public class VersionsCommand : ICommand
         if (!files.Any(x => Path.GetFileName(x) == "deltabox"))
             return Error.DeltaBoxNotFound();
         
+        var currentBranch = ""; 
+        foreach (var line in File.ReadLines(pathFromFolder+"/deltabox"))
+        {
+            var parts = line.Split('|');
+            if (parts[0].Equals("BranchCurrent"))
+            {
+                currentBranch = parts[1];
+            }
+        }
+        
+        
         var results = new Dictionary<string, string>();
             
         foreach (var line in File.ReadLines(pathFromFolder+"/deltabox"))
@@ -18,6 +29,9 @@ public class VersionsCommand : ICommand
             var parts = line.Split('|');
             if (parts.Length == 4 && parts[1].Equals(versionName,StringComparison.InvariantCultureIgnoreCase))
             {
+                if (parts[0] != currentBranch)
+                    return new Error("Branch.Invalid", "The branch  is different");
+                
                 results.Add(parts[2],parts[3]);
             }
         }

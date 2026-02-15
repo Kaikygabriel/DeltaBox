@@ -13,7 +13,10 @@ var commands = new Dictionary<string, ICommand>(StringComparer.OrdinalIgnoreCase
     ["status"] = new AltersFilesCommand(),
     ["commit"] = new AddVersionsCommand(),
     ["log"] = new GetVersionsCommand(),
-    ["remove"] = new RemoveVersionCommand()
+    ["remove"] = new RemoveVersionCommand(),
+    ["branch"] = new CreateBranchCommand(),
+    ["checkout"] = new CheckoutCommand()
+
 };
 
 if (!commands.TryGetValue(method, out var command))
