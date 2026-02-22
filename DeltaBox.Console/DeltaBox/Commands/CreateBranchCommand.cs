@@ -15,6 +15,7 @@ public class CreateBranchCommand: ICommand
         var branchCurrent = "";
         var lines = File.ReadLines(fileDeltaBox);
         var currentVersion = "";
+        
         foreach (var line in lines)
         {
             var parts = line.Split('|');
@@ -32,7 +33,7 @@ public class CreateBranchCommand: ICommand
         }
         var linesInDelta = File.ReadLines(fileDeltaBox).ToList();
         linesInDelta[2] = $"BranchCurrent|{nameNewBranch}";
-        linesInDelta.Add($"Branch|{nameNewBranch}|{branchCurrent}");
+        linesInDelta.Add($"Branch|{nameNewBranch}|{branchCurrent}|{currentVersion}");
         File.WriteAllLines(fileDeltaBox, linesInDelta);
         return Result.Success();
     }

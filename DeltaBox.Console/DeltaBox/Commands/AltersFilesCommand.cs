@@ -28,6 +28,7 @@ public class AltersFilesCommand : ICommand
             if (parts[0] == "BranchCurrent")
             {
                 branchCurrent = parts[1];
+                
             }
         }
         foreach (var line in lines)
@@ -38,7 +39,18 @@ public class AltersFilesCommand : ICommand
                 versionFinish = parts[1];
             }
         }
-        
+        if (string.IsNullOrEmpty(versionFinish))
+            foreach (var line in lines)
+            {
+                var parts = line.Split('|');
+
+                if (parts[0].Equals("Branch") && parts[1].Equals(branchCurrent))
+                {
+                    versionFinish = parts[3];
+                    branchCurrent = parts[2];
+                }
+             
+            }
         foreach (var line in File.ReadLines(pathFromFolder + "/deltabox"))
         {
             var parts = line.Split('|');

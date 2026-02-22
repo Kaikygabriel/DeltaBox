@@ -22,7 +22,7 @@ public class InitVersionCommand : ICommand
         File.AppendAllText(pathFromFolder + "/deltabox", $"\nCurrentVersion|Init\n");
         
         File.AppendAllText(pathFromFolder + "/deltabox", $"\nBranchCurrent|main\n");
-        File.AppendAllText(pathFromFolder + "/deltabox", $"\nBranch|main|\n");
+        File.AppendAllText(pathFromFolder + "/deltabox", $"\nBranch|main||Init\n");
         
         File.AppendAllText(pathFromFolder + "/deltabox", $"\nmain|Init|{DateTime.UtcNow}\n");
 

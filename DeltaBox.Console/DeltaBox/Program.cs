@@ -8,15 +8,16 @@ var method = args[0]?? throw new Exception("Method Invalid");
 
 var commands = new Dictionary<string, ICommand>(StringComparer.OrdinalIgnoreCase)
 {
+    ["help"] = new HelpCommand(),
     ["init"] = new InitVersionCommand(),
-    ["previus"] = new VersionsCommand(),
+    ["prev"] = new VersionsCommand(),
     ["status"] = new AltersFilesCommand(),
     ["commit"] = new AddVersionsCommand(),
     ["log"] = new GetVersionsCommand(),
     ["remove"] = new RemoveVersionCommand(),
     ["branch"] = new CreateBranchCommand(),
-    ["checkout"] = new CheckoutCommand()
-
+    ["checkout"] = new CheckoutCommand(),
+    ["merge"] = new MergeCommand()
 };
 
 if (!commands.TryGetValue(method, out var command))
