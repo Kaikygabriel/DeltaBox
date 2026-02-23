@@ -9,6 +9,7 @@ var method = args[0]?? throw new Exception("Method Invalid");
 var commands = new Dictionary<string, ICommand>(StringComparer.OrdinalIgnoreCase)
 {
     ["help"] = new HelpCommand(),
+    ["newos"] = new UpdateSystemCommand(),
     ["init"] = new InitVersionCommand(),
     ["prev"] = new VersionsCommand(),
     ["status"] = new AltersFilesCommand(),

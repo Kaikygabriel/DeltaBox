@@ -25,7 +25,7 @@ public sealed class HelpCommand : ICommand
             ["prev"] = new CommandHelp(
                 "prev <versao>",
                 "Volta o projeto para uma versão anterior.",
-                "deltabox prev <versao>",
+                "deltabox prev <pasta> <versao>",
                 examples: new[]
                 {
                     "deltabox prev 3",
@@ -46,7 +46,7 @@ public sealed class HelpCommand : ICommand
             ["commit"] = new CommandHelp(
                 "commit <nome>",
                 "Cria uma nova versão (commit) com um nome.",
-                "deltabox commit <nome>",
+                "deltabox commit <pasta> <nome>",
                 examples: new[]
                 {
                     "deltabox commit \"cria tela de login\"",
@@ -67,7 +67,7 @@ public sealed class HelpCommand : ICommand
             ["remove"] = new CommandHelp(
                 "remove <branch>",
                 "Remove uma branch.",
-                "deltabox remove <branch>",
+                "deltabox remove <pasta> <branch>",
                 examples: new[]
                 {
                     "deltabox remove feature-login"
@@ -77,7 +77,7 @@ public sealed class HelpCommand : ICommand
             ["branch"] = new CommandHelp(
                 "branch <nome>",
                 "Cria uma nova branch.",
-                "deltabox branch <nome>",
+                "deltabox branch <pasta> <nome>",
                 examples: new[]
                 {
                     "deltabox branch feature-login"
@@ -87,7 +87,7 @@ public sealed class HelpCommand : ICommand
             ["checkout"] = new CommandHelp(
                 "checkout <nome>",
                 "Troca para outra branch.",
-                "deltabox checkout <nome>",
+                "deltabox checkout <pasta> <nome>",
                 examples: new[]
                 {
                     "deltabox checkout main",
@@ -98,7 +98,7 @@ public sealed class HelpCommand : ICommand
             ["merge"] = new CommandHelp(
                 "merge <branch>",
                 "Faz merge da <branch> na branch atual (somente quando atual = main).",
-                "deltabox merge <branch>",
+                "deltabox merge <pasta> <branch> <nameVersion>",
                 rules: new[]
                 {
                     "Só é permitido executar merge quando a branch atual for \"main\".",
@@ -122,7 +122,6 @@ public sealed class HelpCommand : ICommand
         Console.WriteLine();
         Console.WriteLine("COMANDOS:");
 
-        // ordena e alinha bonitinho
         var rows = _help
             .Select(kv => new { Name = kv.Key, Usage = kv.Value.Usage, Desc = kv.Value.ShortDescription })
             .OrderBy(x => x.Name)
@@ -166,29 +165,17 @@ public sealed class HelpCommand : ICommand
                 Console.WriteLine($"  {ex}");
         }
     }
-
-    private sealed record CommandHelp(
-        string Usage,
-        string ShortDescription,
-        string Syntax,
-        string[]? rules = null,
-        string[]? examples = null)
-    {
-        public string Name => Usage.Split(' ', StringSplitOptions.RemoveEmptyEntries)[0];
-        public string[]? Rules => rules;
-        public string[]? Examples => examples;
-    }
+    
 
     public Result Execute(CommandContext ctx)
     {
-        // help ou help <comando>
         if (ctx.Args.Length == 0)
         {
             PrintGeneralHelp();
             return Result.Success();
         }
 
-        var cmd = ctx.Args[1];
+        var cmd = ctx.Args[1]??"";
         if (!_help.TryGetValue(cmd, out var info))
         {
             Console.WriteLine($"Comando desconhecido: {cmd}");
