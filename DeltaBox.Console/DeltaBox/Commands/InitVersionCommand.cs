@@ -38,6 +38,8 @@ public class InitVersionCommand : ICommand
             var filesInSubDictionary = Directory.GetFiles(subDictionary);
             SaveFilesOfDirectory(filesInSubDictionary, pathFromFolder);
         }
+        if(OperatingSystem.IsWindows())
+            File.SetAttributes(pathFromFolder+ "/deltabox", FileAttributes.Hidden);
 
         return Result.Success();
     }
@@ -56,6 +58,4 @@ public class InitVersionCommand : ICommand
             File.AppendAllText(fileDeltaBox, text);
         }
     }
-
-    
 }

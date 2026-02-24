@@ -244,8 +244,8 @@ public class VersionsCommand : ICommand
 
     public Result Execute(CommandContext ctx)
     {
-        if (ctx.Args[2] is null)
+        if (ctx.Args[1] is null)
             return Error.CommandInvalid();
-        return GoToVersion(ctx.Folder, ctx.Args[2]);
+        return GoToVersion(ctx.Folder, ctx.Args[1]);
     }
 }

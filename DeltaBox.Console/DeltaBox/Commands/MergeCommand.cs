@@ -9,7 +9,7 @@ public class MergeCommand : ICommand
 {
     public Result Execute(CommandContext ctx)
     {
-        return Merge(ctx.Folder,ctx.Args[2],ctx.Args[3]);
+        return Merge(ctx.Folder,ctx.Args[1],ctx.Args[2]);
     }
 
     public Result Merge(string folder , string branch,string nameVersionMerge)

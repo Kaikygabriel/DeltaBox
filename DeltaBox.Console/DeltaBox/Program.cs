@@ -3,7 +3,9 @@ using DeltaBox.Commands;
 using DeltaBox.Commum;
 using DeltaBox.View;
 
-var folder = args[1] ?? throw new Exception("Method Invalid");
+var folder = Environment.CurrentDirectory;
+if(args is null || args.Length < 0)
+    throw new Exception("Method Invalid");
 var method = args[0]?? throw new Exception("Method Invalid");
 
 var commands = new Dictionary<string, ICommand>(StringComparer.OrdinalIgnoreCase)

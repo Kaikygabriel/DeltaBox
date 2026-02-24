@@ -56,8 +56,8 @@ public class CheckoutCommand : ICommand
 
     public Result Execute(CommandContext ctx)
     {
-        if (ctx.Args.Length <= 1|| ctx.Args[2] is null)
+        if (ctx.Args.Length <= 1|| ctx.Args[1] is null)
             return Error.CommandInvalid();
-        return Checkout(ctx.Folder,ctx.Args[2]);
+        return Checkout(ctx.Folder,ctx.Args[1]);
     }
 }
