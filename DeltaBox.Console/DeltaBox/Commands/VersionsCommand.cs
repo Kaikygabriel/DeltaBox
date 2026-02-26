@@ -8,11 +8,12 @@ public class VersionsCommand : ICommand
     public Result GoToVersion(string pathFromFolder, string versionName)
     {
         var files = Directory.GetFiles(pathFromFolder);
-        if (!files.Any(x => Path.GetFileName(x) == "deltabox"))
+        
+        if (!files.Any(x => Path.GetFileName(x).Equals(".deltabox")))
             return Error.DeltaBoxNotFound();
         
         var currentBranch = ""; 
-        foreach (var line in File.ReadLines(pathFromFolder+"/deltabox"))
+        foreach (var line in File.ReadLines(pathFromFolder+"/.deltabox"))
         {
             var parts = line.Split('|');
             if (parts[0].Equals("BranchCurrent"))
@@ -24,7 +25,7 @@ public class VersionsCommand : ICommand
         
         var results = new Dictionary<string, string>();
             
-        foreach (var line in File.ReadLines(pathFromFolder+"/deltabox"))
+        foreach (var line in File.ReadLines(pathFromFolder+"/.deltabox"))
         {
             var parts = line.Split('|');
             if (parts.Length == 4 && parts[1].Equals(versionName,StringComparison.InvariantCultureIgnoreCase))
@@ -38,9 +39,9 @@ public class VersionsCommand : ICommand
 
         if (results.Count <= 0)
             return new Error("Version.NotFound","Version not found!");
-        VerifyAltersFile(files, pathFromFolder + "/deltabox", pathFromFolder);
+        VerifyAltersFile(files, pathFromFolder + "/.deltabox", pathFromFolder);
         foreach (var file in files)
-            if ( Path.GetFileName(file)!= "deltabox")
+            if ( Path.GetFileName(file)!= ".deltabox")
                 File.Delete(file);
         
         var dictionaries = Directory.GetDirectories(
@@ -55,46 +56,43 @@ public class VersionsCommand : ICommand
             var folders = result.Key;
             var segregationsFolders = folders.Split(new[] { '/', '\\' }, StringSplitOptions.RemoveEmptyEntries)
                 .ToList();
-            int corte1=0;
-            if (OperatingSystem.IsWindows())
-            { 
-                corte1 =
-                    segregationsFolders
-                        .IndexOf(segregationsFolders.First(x=>x == Path.GetDirectoryName(pathFromFolder.Remove(0,2))));
-
-            }
-            else if (OperatingSystem.IsLinux()||OperatingSystem.IsMacOS())
-            { 
-                corte1 =
-                    segregationsFolders
-                        .IndexOf(segregationsFolders.First(x=>x == Path.GetDirectoryName(pathFromFolder)));
-
-            }
-            var corte2=  segregationsFolders
-                .IndexOf(segregationsFolders.Last());
-            var path = ".";
-            if (corte2 - corte1 >= 1)
+            var caminho = "";
+            
+                if (OperatingSystem.IsWindows())
+                    caminho += segregationsFolders[0]+'\\';
+                else
+                    caminho += segregationsFolders[0]+'/';
+                
+                for (var a = 1; a <= segregationsFolders.Count - 1; a++)
+                {
+                    if (segregationsFolders[a] != segregationsFolders.Last())
+                    {
+                            if (OperatingSystem.IsWindows())
+                            {
+                                caminho += segregationsFolders[a]+'\\' ;
+                            }
+                            else
+                            {
+                                caminho +=  segregationsFolders[a]+'/';
+                            }
+                      
+                            Directory.CreateDirectory(caminho);
+                    }
+                }
+            
+         
+            if (result.Key != ".deltabox")
             {
-                 var nemList = segregationsFolders[corte1..corte2];
-                 foreach (var s in nemList)
-                 {
-                     path =$"{path}/{s}";
-                     Directory.CreateDirectory(path);
-                 }
-            }
-
-            if (result.Key != "deltabox")
-            {
+                
                 if(OperatingSystem.IsLinux() || OperatingSystem.IsMacOS())
                     File.WriteAllBytes(result.Key.Replace('\\','/'),fileInBytePrevius);
                 else
                     File.WriteAllBytes(result.Key,fileInBytePrevius);
             }
 
-            var lines = File.ReadLines(pathFromFolder + "/deltabox").ToList();
+            var lines = File.ReadLines(pathFromFolder + "/.deltabox").ToList();
             lines[0] = $"CurrentVersion|{versionName}";
-            File.WriteAllLines(pathFromFolder + "/deltabox", lines);
-    
+            File.WriteAllLines(pathFromFolder + "/.deltabox", lines);
         }
 
         return Result.Success();
@@ -103,7 +101,7 @@ public class VersionsCommand : ICommand
     public void VerifyAltersFile(IEnumerable<string>files,string deltaBoxFile,string path)
     {
         var versionFinish = "";
-        foreach (var line in File.ReadLines(path + "/deltabox"))
+        foreach (var line in File.ReadLines(path + "/.deltabox"))
         {
             var parts = line.Split('|');
             if (parts.Length == 2)
@@ -113,7 +111,7 @@ public class VersionsCommand : ICommand
         }
 
         var currentVersion = "";
-        foreach (var line in File.ReadLines(path + "/deltabox"))
+        foreach (var line in File.ReadLines(path + "/.deltabox"))
         {
             var parts = line.Split('|');
             if (parts.Length == 2 && parts[0] == "CurrentVersion")
@@ -127,7 +125,7 @@ public class VersionsCommand : ICommand
 
         var result = new Dictionary<string, string>();
             
-        foreach (var line in File.ReadLines(path+"/deltabox"))
+        foreach (var line in File.ReadLines(path+"/.deltabox"))
         {
             var parts = line.Split('|');
             if (parts.Length == 4 && parts[1].Equals(currentVersion,StringComparison.InvariantCultureIgnoreCase))
@@ -159,7 +157,7 @@ public class VersionsCommand : ICommand
                     }
                 }
             }
-            else if (key is null && fileName != "deltabox")
+            else if (key is null && fileName != ".deltabox")
             {
                 if (!MessageIfAltersOrNewFiles())
                     throw new Exception("Pending files: commit to save before reverting to a previous version.");
@@ -190,7 +188,7 @@ public class VersionsCommand : ICommand
                         }
                     }
                 }
-                else if(key is null && fileName != "deltabox")
+                else if(key is null && fileName != ".deltabox")
                 {
                     if(!MessageIfAltersOrNewFiles())
                         throw new Exception("Pending files: commit to save before reverting to a previous version.");
@@ -226,7 +224,7 @@ public class VersionsCommand : ICommand
                 var fileSubDictionary = Directory.GetFiles(subDictionary);
                 foreach (var file in fileSubDictionary)
                 {
-                    if ( Path.GetFileName(file)!= "deltabox")
+                    if ( Path.GetFileName(file)!= ".deltabox")
                         File.Delete(file);
                 }
                 var subSubDictionary = Directory.GetDirectories(

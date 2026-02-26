@@ -16,15 +16,15 @@ public class InitVersionCommand : ICommand
             return Error.DirectoryNotFound();
         var files = Directory.GetFiles(pathFromFolder);
 
-        if (files.Any(x => Path.GetFileName(x).Equals("deltabox")))
+        if (files.Any(x => Path.GetFileName(x).Equals(Configure.DeltaBoxFile)))
             return new Error("DeltaBox.AlreadyExists", "File deltabox already exists!");
 
-        File.AppendAllText(pathFromFolder + "/deltabox", $"\nCurrentVersion|Init\n");
+        File.AppendAllText(pathFromFolder + "/"+Configure.DeltaBoxFile, $"\nCurrentVersion|Init\n");
         
-        File.AppendAllText(pathFromFolder + "/deltabox", $"\nBranchCurrent|main\n");
-        File.AppendAllText(pathFromFolder + "/deltabox", $"\nBranch|main||Init\n");
+        File.AppendAllText(pathFromFolder + "/"+Configure.DeltaBoxFile, $"\nBranchCurrent|main\n");
+        File.AppendAllText(pathFromFolder + "/"+Configure.DeltaBoxFile, $"\nBranch|main||Init\n");
         
-        File.AppendAllText(pathFromFolder + "/deltabox", $"\nmain|Init|{DateTime.UtcNow}\n");
+        File.AppendAllText(pathFromFolder + "/"+Configure.DeltaBoxFile, $"\nmain|Init|{DateTime.UtcNow}\n");
 
         SaveFilesOfDirectory(files, pathFromFolder);
 
@@ -39,14 +39,15 @@ public class InitVersionCommand : ICommand
             SaveFilesOfDirectory(filesInSubDictionary, pathFromFolder);
         }
         if(OperatingSystem.IsWindows())
-            File.SetAttributes(pathFromFolder+ "/deltabox", FileAttributes.Hidden);
+            File.SetAttributes(pathFromFolder+ "/"+Configure.DeltaBoxFile, FileAttributes.Hidden);
 
         return Result.Success();
     }
 
     private void SaveFilesOfDirectory(string[] files,string pathFromFolder)
     {
-        var fileDeltaBox = pathFromFolder + "/deltabox";
+        var fileDeltaBox = pathFromFolder + "/"+Configure.DeltaBoxFile;
+        Console.WriteLine(fileDeltaBox);
         for (var a = 0; a < files.Length; a++)
         {
             byte[] content = File.ReadAllBytes(files[a]);

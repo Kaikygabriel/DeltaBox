@@ -17,14 +17,19 @@ public class AddVersionsCommand : ICommand
     private Result AddNewVersion(string pathFromFolder,string nameVersion)
     {
         var files = Directory.GetFiles(pathFromFolder);
-        if (!files.Any(x => Path.GetFileName(x) == "deltabox"))
+        if (!files.Any(x => Path.GetFileName(x) == Configure.DeltaBoxFile))
             return Error.DeltaBoxNotFound();
         var result = new Dictionary<string, string>();
         var currentBranch = "";
         
-        foreach (var line in File.ReadLines(pathFromFolder + "/deltabox"))
+        foreach (var line in File.ReadLines(pathFromFolder + "/"+Configure.DeltaBoxFile))
         {
             var parts = line.Split('|');
+            
+            if(parts.Length>=2)
+                if (parts[1].Equals(nameVersion))
+                    return new Error("Version.Exist", "Version already exist");
+            
             if (parts.Length == 3 && parts[1] == nameVersion)
                 result[parts[1]] = parts[2];
             if (parts[0] == "BranchCurrent")
@@ -34,9 +39,9 @@ public class AddVersionsCommand : ICommand
         }
 
         if (string.IsNullOrEmpty(currentBranch))
-            return Result.Failure(new("Branch.NotFound", "NOt Found")); 
+            return Result.Failure(new("Branch.NotFound", "not Found")); 
         
-        File.AppendAllText(pathFromFolder + "/deltabox", $"\n{currentBranch}|{nameVersion}|{DateTime.UtcNow}\n");
+        File.AppendAllText(pathFromFolder + "/"+Configure.DeltaBoxFile, $"\n{currentBranch}|{nameVersion}|{DateTime.UtcNow}\n");
 
         UpdateFilesInDeltaBox(files, result, nameVersion, pathFromFolder,currentBranch);
 
@@ -49,13 +54,19 @@ public class AddVersionsCommand : ICommand
         foreach (var subDictionary in dictionaries)
         {
             UpdateFilesInDeltaBox(Directory.GetFiles(subDictionary), result, nameVersion, pathFromFolder,currentBranch);
-        }  
+        }
+
+        var filePath = Path.Combine(pathFromFolder, Configure.DeltaBoxFile);
+        if(OperatingSystem.IsLinux() || OperatingSystem.IsMacOS())
+            filePath = filePath.Replace('\\','/');
+
+        File.SetAttributes(filePath, FileAttributes.Normal);
         
-        var lines = File.ReadLines(pathFromFolder + "/deltabox").ToList();
+        var lines = File.ReadLines(filePath).ToList();
         
         lines[0] = $"CurrentVersion|{nameVersion}";
 
-        File.WriteAllLines(pathFromFolder + "/deltabox", lines);
+        File.WriteAllLines(filePath, lines);
 
         return Result.Success();
     }
@@ -69,7 +80,7 @@ public class AddVersionsCommand : ICommand
             string fileName = Path.GetFileName(filePath);
 
             var key = result.Keys.FirstOrDefault(x => x.Equals(filePath, StringComparison.CurrentCultureIgnoreCase));
-            if (key is not null && fileName != "deltabox")
+            if (key is not null && fileName != Configure.DeltaBoxFile)
             {
                 var fileInBytePrevius = Convert.FromBase64String(result.GetValueOrDefault(key) ?? string.Empty);
 
@@ -80,10 +91,10 @@ public class AddVersionsCommand : ICommand
                         text = $"{currentBranch}|{nameVersion}|{filePath.Replace('\\','/')}|{Convert.ToBase64String(currentContent)}\n";
 
                     Console.WriteLine($"Versionando : {text} ");
-                    File.AppendAllText(pathFromFolder + "/deltabox", text);
+                    File.AppendAllText(pathFromFolder + "/"+Configure.DeltaBoxFile, text);
                 }
             }
-            else if (fileName != "deltabox")
+            else if (fileName != Configure.DeltaBoxFile)
             {
                 byte[] content = File.ReadAllBytes(filePath);
                 var fileInBase64 = Convert.ToBase64String(content);
@@ -92,7 +103,7 @@ public class AddVersionsCommand : ICommand
                     text = $"{currentBranch}|{nameVersion}|{filePath.Replace('\\','/')}|{fileInBase64}\n";
                 
                 Console.WriteLine($"Versionando : {text} ");
-                File.AppendAllText(pathFromFolder + "/deltabox", text);
+                File.AppendAllText(pathFromFolder + "/"+Configure.DeltaBoxFile, text);
             }
         }
         

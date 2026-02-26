@@ -13,14 +13,14 @@ public class AltersFilesCommand : ICommand
     public Result ViewAltersFiles(string pathFromFolder)
     {
         var files = Directory.GetFiles(pathFromFolder);
-        if (!files.Any(x => Path.GetFileName(x) == "deltabox"))
+        if (!files.Any(x => Path.GetFileName(x) == Configure.DeltaBoxFile))
             return Error.DeltaBoxNotFound();
         var result = new Dictionary<string, string>();
 
         var branchCurrent = "";
         var versionFinish = "";
         
-        var lines = File.ReadLines(pathFromFolder + "/deltabox");
+        var lines = File.ReadLines(pathFromFolder + "/"+Configure.DeltaBoxFile);
         foreach (var line in lines)
         {
             var parts = line.Split('|');
@@ -51,7 +51,7 @@ public class AltersFilesCommand : ICommand
                 }
              
             }
-        foreach (var line in File.ReadLines(pathFromFolder + "/deltabox"))
+        foreach (var line in File.ReadLines(pathFromFolder + "/"+Configure.DeltaBoxFile))
         {
             var parts = line.Split('|');
             if (parts.Length >= 4 && parts[1].Equals(versionFinish) && parts[0].Equals(branchCurrent))
@@ -122,7 +122,7 @@ public class AltersFilesCommand : ICommand
             
             string fileName = Path.GetFileName(filePath);
             
-            if(!key && fileName != "deltabox")
+            if(!key && fileName != Configure.DeltaBoxFile)
             {
                 var currentTextColor = Console.ForegroundColor;
                 Console.ForegroundColor = ConsoleColor.Green;

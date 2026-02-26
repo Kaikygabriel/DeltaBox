@@ -1,6 +1,6 @@
-namespace DeltaBox.Sei;
 
-public interface Iteste
+namespace DeltaBox.Sei;
+public interface ITest
 {
-    void Testar();//ta dando certo 
+    
 }

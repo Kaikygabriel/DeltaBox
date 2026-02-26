@@ -11,10 +11,10 @@ public class UpdateSystemCommand : ICommand
             return Error.DirectoryNotFound();
         var files = Directory.GetFiles(ctx.Folder);
 
-        if (!files.Any(x => Path.GetFileName(x).Equals("deltabox")))
+        if (!files.Any(x => Path.GetFileName(x).Equals(Configure.DeltaBoxFile)))
             return new Error("DeltaBox.No.Exists", "File deltabox No Exists!");
         
-        var fileDeltaBox = ctx.Folder + "/deltabox";
+        var fileDeltaBox = ctx.Folder + "/"+Configure.DeltaBoxFile;
         
         var lines = File.ReadLines(fileDeltaBox).ToArray();
         for (var line = 0; line < lines.Length; line++)

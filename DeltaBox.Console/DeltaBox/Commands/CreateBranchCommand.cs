@@ -8,10 +8,10 @@ public class CreateBranchCommand: ICommand
     public Result Create(string folder, string nameNewBranch)
     {
         var files = Directory.GetFiles(folder);
-        if (!files.Any(x => Path.GetFileName(x) == "deltabox"))
+        if (!files.Any(x => Path.GetFileName(x) == Configure.DeltaBoxFile))
             return Error.DeltaBoxNotFound();
         
-        var fileDeltaBox = folder + "/deltabox";
+        var fileDeltaBox = folder + "/"+Configure.DeltaBoxFile;
         var branchCurrent = "";
         var lines = File.ReadLines(fileDeltaBox);
         var currentVersion = "";

@@ -18,7 +18,7 @@ public class RemoveVersionCommand : ICommand
             return Error.DirectoryNotFound() ;
         
         var files = Directory.GetFiles(pathFromFolder);
-        var deltaBoxFile = files.FirstOrDefault(x => Path.GetFileName(x).Equals("deltabox")) ?? throw new Exception("NÂO ACHOU O ARQUIVO ");
+        var deltaBoxFile = files.FirstOrDefault(x => Path.GetFileName(x).Equals(Configure.DeltaBoxFile)) ;
         
         if (deltaBoxFile is null)
             return Error.DeltaBoxNotFound();
@@ -55,12 +55,15 @@ public class RemoveVersionCommand : ICommand
         foreach (var line in File.ReadLines(deltaBoxFile))
         {
             var parts = line.Split('|');
-            if (parts.Length == 2 && parts[0]!="BranchCurrent")
-            {
-                versionFinish = parts.First();
-            }
+            if(parts.Length >=2)
+                if ( parts[0]!="BranchCurrent"&&parts[0]!="CurrentVersion"&&parts[0]!="Branch")
+                {
+                    versionFinish = parts[1];
+                }
         }
         var lines = File.ReadLines(deltaBoxFile).ToList();
+        File.SetAttributes(deltaBoxFile, FileAttributes.Normal);
+
         lines[0] = $"CurrentVersion|{versionFinish}";
         File.WriteAllLines(deltaBoxFile, lines);
     }

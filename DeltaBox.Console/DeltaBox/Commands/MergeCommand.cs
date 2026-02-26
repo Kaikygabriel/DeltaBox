@@ -15,10 +15,10 @@ public class MergeCommand : ICommand
     public Result Merge(string folder , string branch,string nameVersionMerge)
     {
         var files = Directory.GetFiles(folder);
-        if (!files.Any(x => Path.GetFileName(x) == "deltabox"))
+        if (!files.Any(x => Path.GetFileName(x) == Configure.DeltaBoxFile))
             return Error.DeltaBoxNotFound();
         
-        var fileDeltaBox = folder + "/deltabox";
+        var fileDeltaBox = folder + "/"+Configure.DeltaBoxFile;
 
         var deltaBox = File.ReadAllLines(fileDeltaBox); 
         var versionBaseBranch = "";
@@ -230,8 +230,6 @@ public class MergeCommand : ICommand
         }
         return Result.Success();
     }
-    
-    
     
     private Dictionary<string, string> GetFilesInDeltaBox(string[] deltaBox, string branch, string version)
     {

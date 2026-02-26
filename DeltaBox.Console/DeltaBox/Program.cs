@@ -3,15 +3,15 @@ using DeltaBox.Commands;
 using DeltaBox.Commum;
 using DeltaBox.View;
 
-var folder = Environment.CurrentDirectory;
-if(args is null || args.Length < 0)
-    throw new Exception("Method Invalid");
+
+var folder =Environment.CurrentDirectory;
+
 var method = args[0]?? throw new Exception("Method Invalid");
 
 var commands = new Dictionary<string, ICommand>(StringComparer.OrdinalIgnoreCase)
 {
     ["help"] = new HelpCommand(),
-    ["newos"] = new UpdateSystemCommand(),
+ //   ["newos"] = new UpdateSystemCommand(),
     ["init"] = new InitVersionCommand(),
     ["prev"] = new VersionsCommand(),
     ["status"] = new AltersFilesCommand(),

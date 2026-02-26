@@ -13,7 +13,7 @@ public class GetVersionsCommand : ICommand
             return Error.DirectoryNotFound() ;
         
         var files = Directory.GetFiles(pathFromFolder);
-        var deltaBoxFile = files.FirstOrDefault(x => Path.GetFileName(x).Equals("deltabox"));
+        var deltaBoxFile = files.FirstOrDefault(x => Path.GetFileName(x).Equals(Configure.DeltaBoxFile));
         
         if (deltaBoxFile is null)
             return Error.DeltaBoxNotFound();
