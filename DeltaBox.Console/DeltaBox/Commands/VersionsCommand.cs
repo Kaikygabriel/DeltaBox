@@ -56,31 +56,54 @@ public class VersionsCommand : ICommand
             var folders = result.Key;
             var segregationsFolders = folders.Split(new[] { '/', '\\' }, StringSplitOptions.RemoveEmptyEntries)
                 .ToList();
-            var caminho = "";
+            if (OperatingSystem.IsLinux() || OperatingSystem.IsMacOS())
+            {
+                var repoBase = Path.GetFullPath(pathFromFolder).Replace('\\','/').TrimEnd('/');
+                var key = result.Key.Split('\\','/').ToList();
+
+                for (var a = 0; a < key.Count; a++)
+                {
+                    if (a == 0)
+                    {
+                        key[a] = "/" + key[a];
+                    }
+                    if(a == key.Count-1)
+                        key.RemoveAt(a);
+                }
             
-                if (OperatingSystem.IsWindows())
-                    caminho += segregationsFolders[0]+'\\';
-                else
-                    caminho += segregationsFolders[0]+'/';
-                
+                var newkey = Path.Combine(key.ToArray());
+                if (newkey != Environment.CurrentDirectory)
+                {
+                    Directory.CreateDirectory(newkey!);
+                }
+            }
+            
+            var caminho = "";
+
+            if (OperatingSystem.IsWindows())
+            {
+
+
+                caminho += segregationsFolders[0] + '\\';
+
                 for (var a = 1; a <= segregationsFolders.Count - 1; a++)
                 {
                     if (segregationsFolders[a] != segregationsFolders.Last())
                     {
-                            if (OperatingSystem.IsWindows())
-                            {
-                                caminho += segregationsFolders[a]+'\\' ;
-                            }
-                            else
-                            {
-                                caminho +=  segregationsFolders[a]+'/';
-                            }
-                      
-                            Directory.CreateDirectory(caminho);
+                        if (OperatingSystem.IsWindows())
+                        {
+                            caminho += segregationsFolders[a] + '\\';
+                        }
+                        else
+                        {
+                            caminho += segregationsFolders[a] + '/';
+                        }
+
+                        Directory.CreateDirectory(caminho);
                     }
                 }
-            
-         
+            }
+
             if (result.Key != ".deltabox")
             {
                 
