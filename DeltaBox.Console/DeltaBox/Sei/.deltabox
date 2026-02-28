@@ -4,22 +4,22 @@ BranchCurrent|main
 
 Branch|main||Init
 
-main|Init|26/02/2026 23:23:26
-main|Init|/home/kaiky/Documentos/Portifolio/DeltaBox/DeltaBox.Console/DeltaBox/Sei/Iteste.cs|Cm5hbWVzcGFjZSBEZWx0YUJveC5TZWk7CnB1YmxpYyBpbnRlcmZhY2UgSVRlc3QKewogICAgCn0=
-main|Init|/home/kaiky/Documentos/Portifolio/DeltaBox/DeltaBox.Console/DeltaBox/Sei/Entity/Teste.cs|Ly9uYWRhIGFpbmRh
-main|Init|/home/kaiky/Documentos/Portifolio/DeltaBox/DeltaBox.Console/DeltaBox/Sei/Entity/Product.cs|Ly9zZWkgbGE=
-main|Init|/home/kaiky/Documentos/Portifolio/DeltaBox/DeltaBox.Console/DeltaBox/Sei/Entity/sub/sdfasdf.html|PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KPGhlYWQ+CiAgICA8bWV0YSBjaGFyc2V0PSJVVEYtOCI+CiAgICA8dGl0bGU+VGl0bGU8L3RpdGxlPgo8L2hlYWQ+Cjxib2R5PgoKPC9ib2R5Pgo8L2h0bWw+
-main|Init|/home/kaiky/Documentos/Portifolio/DeltaBox/DeltaBox.Console/DeltaBox/Sei/Entity/sub/subarquivo|
-main|Init|/home/kaiky/Documentos/Portifolio/DeltaBox/DeltaBox.Console/DeltaBox/Sei/Entity/Abstraction/Entity.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaS5FbnRpdHkuQWJzdHJhY3Rpb247CgpwdWJsaWMgYWJzdHJhY3QgY2xhc3MgRW50aXR5CnsKICAgIHB1YmxpYyBHdWlkIElkIHsgZ2V0OyBpbml0OyB9Cn0vL3Rlc3RlIC90ZXN0ZXMgL3Rlc3Qg
-main|Init|/home/kaiky/Documentos/Portifolio/DeltaBox/DeltaBox.Console/DeltaBox/Sei/Entity/Abstraction/SoNaDev.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaS5FbnRpdHkuQWJzdHJhY3Rpb247CgpwdWJsaWMgY2xhc3MgU29OYURldgp7CiAgICAKfQ==
-main|Init|/home/kaiky/Documentos/Portifolio/DeltaBox/DeltaBox.Console/DeltaBox/Sei/Entity/SubEntity/Teste.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaS5FbnRpdHkuU3ViRW50aXR5OwoKcHVibGljIHJlY29yZCBUZXN0ZShzdHJpbmcgdGVzdGUpOw==
+main|Init|28/02/2026 16:14:53
+main|Init|C:\Users\kaiky\Downloads\kaka\DeltaBox\DeltaBox.Console\DeltaBox\Sei\Iteste.cs|DQpuYW1lc3BhY2UgRGVsdGFCb3guU2VpOw0KcHVibGljIGludGVyZmFjZSBJVGVzdA0Kew0KICAgIA0KfQ==
+main|Init|C:\Users\kaiky\Downloads\kaka\DeltaBox\DeltaBox.Console\DeltaBox\Sei\Entity\Product.cs|Ly9zZWkgbGE=
+main|Init|C:\Users\kaiky\Downloads\kaka\DeltaBox\DeltaBox.Console\DeltaBox\Sei\Entity\Teste.cs|Ly9uYWRhIGFpbmRh
+main|Init|C:\Users\kaiky\Downloads\kaka\DeltaBox\DeltaBox.Console\DeltaBox\Sei\Entity\Abstraction\Entity.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaS5FbnRpdHkuQWJzdHJhY3Rpb247DQoNCnB1YmxpYyBhYnN0cmFjdCBjbGFzcyBFbnRpdHkNCnsNCiAgICBwdWJsaWMgR3VpZCBJZCB7IGdldDsgaW5pdDsgfQ0KfS8vdGVzdGUgL3Rlc3RlcyAvdGVzdCA=
+main|Init|C:\Users\kaiky\Downloads\kaka\DeltaBox\DeltaBox.Console\DeltaBox\Sei\Entity\Abstraction\SoNaDev.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaS5FbnRpdHkuQWJzdHJhY3Rpb247DQoNCnB1YmxpYyBjbGFzcyBTb05hRGV2DQp7DQogICAgDQp9
+main|Init|C:\Users\kaiky\Downloads\kaka\DeltaBox\DeltaBox.Console\DeltaBox\Sei\Entity\sub\sdfasdf.html|PCFET0NUWVBFIGh0bWw+DQo8aHRtbCBsYW5nPSJlbiI+DQo8aGVhZD4NCiAgICA8bWV0YSBjaGFyc2V0PSJVVEYtOCI+DQogICAgPHRpdGxlPlRpdGxlPC90aXRsZT4NCjwvaGVhZD4NCjxib2R5Pg0KDQo8L2JvZHk+DQo8L2h0bWw+
+main|Init|C:\Users\kaiky\Downloads\kaka\DeltaBox\DeltaBox.Console\DeltaBox\Sei\Entity\sub\subarquivo|
+main|Init|C:\Users\kaiky\Downloads\kaka\DeltaBox\DeltaBox.Console\DeltaBox\Sei\Entity\SubEntity\Teste.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaS5FbnRpdHkuU3ViRW50aXR5Ow0KDQpwdWJsaWMgcmVjb3JkIFRlc3RlKHN0cmluZyB0ZXN0ZSk7
 
-main|v1|26/02/2026 23:26:39
-main|v1|/home/kaiky/Documentos/Portifolio/DeltaBox/DeltaBox.Console/DeltaBox/Sei/Iteste.cs|Cm5hbWVzcGFjZSBEZWx0YUJveC5TZWk7CnB1YmxpYyBpbnRlcmZhY2UgSVRlc3QKewogICAgCn0=
-main|v1|/home/kaiky/Documentos/Portifolio/DeltaBox/DeltaBox.Console/DeltaBox/Sei/Entity/Teste.cs|Ly9uYWRhIGFpbmRh
-main|v1|/home/kaiky/Documentos/Portifolio/DeltaBox/DeltaBox.Console/DeltaBox/Sei/Entity/Product.cs|Ly9zZWkgbGE=
-main|v1|/home/kaiky/Documentos/Portifolio/DeltaBox/DeltaBox.Console/DeltaBox/Sei/Entity/sub/sdfasdf.html|PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KPGhlYWQ+CiAgICA8bWV0YSBjaGFyc2V0PSJVVEYtOCI+CiAgICA8dGl0bGU+VGl0bGU8L3RpdGxlPgo8L2hlYWQ+Cjxib2R5PgoKPC9ib2R5Pgo8L2h0bWw+
-main|v1|/home/kaiky/Documentos/Portifolio/DeltaBox/DeltaBox.Console/DeltaBox/Sei/Entity/sub/subarquivo|
-main|v1|/home/kaiky/Documentos/Portifolio/DeltaBox/DeltaBox.Console/DeltaBox/Sei/Entity/Abstraction/Entity.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaS5FbnRpdHkuQWJzdHJhY3Rpb247CgpwdWJsaWMgYWJzdHJhY3QgY2xhc3MgRW50aXR5CnsKICAgIHB1YmxpYyBHdWlkIElkIHsgZ2V0OyBpbml0OyB9Cn0vL3Rlc3RlIC90ZXN0ZXMgL3Rlc3Qg
-main|v1|/home/kaiky/Documentos/Portifolio/DeltaBox/DeltaBox.Console/DeltaBox/Sei/Entity/Abstraction/SoNaDev.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaS5FbnRpdHkuQWJzdHJhY3Rpb247CgpwdWJsaWMgY2xhc3MgU29OYURldgp7CiAgICAKfQ==
-main|v1|/home/kaiky/Documentos/Portifolio/DeltaBox/DeltaBox.Console/DeltaBox/Sei/Entity/SubEntity/Teste.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaS5FbnRpdHkuU3ViRW50aXR5OwoKcHVibGljIHJlY29yZCBUZXN0ZShzdHJpbmcgdGVzdGUpOw==
+main|v1|28/02/2026 16:15:07
+main|v1|C:\Users\kaiky\Downloads\kaka\DeltaBox\DeltaBox.Console\DeltaBox\Sei\Iteste.cs|DQpuYW1lc3BhY2UgRGVsdGFCb3guU2VpOw0KcHVibGljIGludGVyZmFjZSBJVGVzdA0Kew0KICAgIA0KfQ==
+main|v1|C:\Users\kaiky\Downloads\kaka\DeltaBox\DeltaBox.Console\DeltaBox\Sei\Entity\Product.cs|Ly9zZWkgbGE=
+main|v1|C:\Users\kaiky\Downloads\kaka\DeltaBox\DeltaBox.Console\DeltaBox\Sei\Entity\Teste.cs|Ly9uYWRhIGFpbmRh
+main|v1|C:\Users\kaiky\Downloads\kaka\DeltaBox\DeltaBox.Console\DeltaBox\Sei\Entity\Abstraction\Entity.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaS5FbnRpdHkuQWJzdHJhY3Rpb247DQoNCnB1YmxpYyBhYnN0cmFjdCBjbGFzcyBFbnRpdHkNCnsNCiAgICBwdWJsaWMgR3VpZCBJZCB7IGdldDsgaW5pdDsgfQ0KfS8vdGVzdGUgL3Rlc3RlcyAvdGVzdCA=
+main|v1|C:\Users\kaiky\Downloads\kaka\DeltaBox\DeltaBox.Console\DeltaBox\Sei\Entity\Abstraction\SoNaDev.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaS5FbnRpdHkuQWJzdHJhY3Rpb247DQoNCnB1YmxpYyBjbGFzcyBTb05hRGV2DQp7DQogICAgDQp9
+main|v1|C:\Users\kaiky\Downloads\kaka\DeltaBox\DeltaBox.Console\DeltaBox\Sei\Entity\sub\sdfasdf.html|PCFET0NUWVBFIGh0bWw+DQo8aHRtbCBsYW5nPSJlbiI+DQo8aGVhZD4NCiAgICA8bWV0YSBjaGFyc2V0PSJVVEYtOCI+DQogICAgPHRpdGxlPlRpdGxlPC90aXRsZT4NCjwvaGVhZD4NCjxib2R5Pg0KDQo8L2JvZHk+DQo8L2h0bWw+
+main|v1|C:\Users\kaiky\Downloads\kaka\DeltaBox\DeltaBox.Console\DeltaBox\Sei\Entity\sub\subarquivo|
+main|v1|C:\Users\kaiky\Downloads\kaka\DeltaBox\DeltaBox.Console\DeltaBox\Sei\Entity\SubEntity\Teste.cs|bmFtZXNwYWNlIERlbHRhQm94LlNlaS5FbnRpdHkuU3ViRW50aXR5Ow0KDQpwdWJsaWMgcmVjb3JkIFRlc3RlKHN0cmluZyB0ZXN0ZSk7

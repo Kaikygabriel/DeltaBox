@@ -6,12 +6,15 @@ using DeltaBox.View;
 
 var folder =Environment.CurrentDirectory;
 
-var method = args[0]?? throw new Exception("Method Invalid");
+var method = "";
+if (args is not null && args.Length >= 1)
+{
+    method = args[0];
+}
 
 var commands = new Dictionary<string, ICommand>(StringComparer.OrdinalIgnoreCase)
 {
     ["help"] = new HelpCommand(),
- //   ["newos"] = new UpdateSystemCommand(),
     ["init"] = new InitVersionCommand(),
     ["prev"] = new VersionsCommand(),
     ["status"] = new AltersFilesCommand(),
@@ -25,6 +28,10 @@ var commands = new Dictionary<string, ICommand>(StringComparer.OrdinalIgnoreCase
 
 if (!commands.TryGetValue(method, out var command))
 {
+    if (string.IsNullOrWhiteSpace(method))
+    {
+        commands["help"].Execute(new CommandContext(folder, new List<string>{"", "" }.ToArray()));
+    }
     Console.WriteLine($"Command Invalid: {method}");
     return;
 }

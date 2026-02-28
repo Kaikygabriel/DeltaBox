@@ -19,7 +19,8 @@ public class AltersFilesCommand : ICommand
 
         var branchCurrent = "";
         var versionFinish = "";
-        
+        File.SetAttributes(pathFromFolder + "/"+Configure.DeltaBoxFile, FileAttributes.Normal);
+
         var lines = File.ReadLines(pathFromFolder + "/"+Configure.DeltaBoxFile);
         foreach (var line in lines)
         {

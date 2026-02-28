@@ -116,6 +116,22 @@ public sealed class HelpCommand : ICommand
     
     private void PrintGeneralHelp()
     {
+        Console.ForegroundColor = ConsoleColor.Cyan;
+        
+        Console.WriteLine(@"
+        ╔══════════════════════════════╗
+        ║        ██████╗ ██████╗       ║
+        ║        ██╔══██╗██╔══██╗      ║
+        ║        ██║  ██║██████╔╝      ║
+        ║        ██║  ██║██╔══██╗      ║
+        ║        ██████╔╝██████╔╝      ║
+        ║        ╚═════╝ ╚═════╝       ║
+        ║          D E L T A B O X     ║
+        ╚══════════════════════════════╝
+                                             ");
+        
+        Console.ResetColor();
+        
         Console.WriteLine("DeltaBox — Simple versioning by folders");
         Console.WriteLine();
         Console.WriteLine("USE :");
@@ -170,6 +186,8 @@ public sealed class HelpCommand : ICommand
 
     public Result Execute(CommandContext ctx)
     {
+      
+
         if (ctx.Args.Length == 0)
         {
             PrintGeneralHelp();
@@ -182,8 +200,8 @@ public sealed class HelpCommand : ICommand
             cmd = ctx.Args[1];
         if (!_help.TryGetValue(cmd, out var info))
         {
-            Console.WriteLine($"Command not found : {cmd}");
-            Console.WriteLine();
+            if(!string.IsNullOrWhiteSpace(cmd))
+                Console.WriteLine($"Command not found : {cmd}");
             PrintGeneralHelp();
             return Result.Success();
         }

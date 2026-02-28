@@ -3,7 +3,7 @@ using DeltaBox.Commum;
 
 namespace DeltaBox.Commands;
 
-public class AddVersionsCommand : ICommand
+public sealed class AddVersionsCommand : ICommand
 {
     
     public Result Execute(CommandContext ctx)
@@ -63,7 +63,8 @@ public class AddVersionsCommand : ICommand
         File.SetAttributes(filePath, FileAttributes.Normal);
         
         var lines = File.ReadLines(filePath).ToList();
-        
+        File.SetAttributes(filePath, FileAttributes.Normal);
+
         lines[0] = $"CurrentVersion|{nameVersion}";
 
         File.WriteAllLines(filePath, lines);
@@ -82,9 +83,9 @@ public class AddVersionsCommand : ICommand
             var key = result.Keys.FirstOrDefault(x => x.Equals(filePath, StringComparison.CurrentCultureIgnoreCase));
             if (key is not null && fileName != Configure.DeltaBoxFile)
             {
-                var fileInBytePrevius = Convert.FromBase64String(result.GetValueOrDefault(key) ?? string.Empty);
+                var fileInBytePrevious = Convert.FromBase64String(result.GetValueOrDefault(key) ?? string.Empty);
 
-                if (!currentContent.SequenceEqual(fileInBytePrevius))
+                if (!currentContent.SequenceEqual(fileInBytePrevious))
                 {
                     var text = $"{currentBranch}|{nameVersion}|{filePath}|{Convert.ToBase64String(currentContent)}\n";
                     if (OperatingSystem.IsLinux()|| OperatingSystem.IsMacOS())

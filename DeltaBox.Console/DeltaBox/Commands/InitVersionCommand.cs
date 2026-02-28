@@ -19,7 +19,7 @@ public class InitVersionCommand : ICommand
         if (files.Any(x => Path.GetFileName(x).Equals(Configure.DeltaBoxFile)))
             return new Error("DeltaBox.AlreadyExists", "File deltabox already exists!");
 
-        File.AppendAllText(pathFromFolder + "/"+Configure.DeltaBoxFile, $"\nCurrentVersion|Init\n");
+        File.AppendAllText(pathFromFolder + "/"+Configure.DeltaBoxFile, $"CurrentVersion|Init\n");
         
         File.AppendAllText(pathFromFolder + "/"+Configure.DeltaBoxFile, $"\nBranchCurrent|main\n");
         File.AppendAllText(pathFromFolder + "/"+Configure.DeltaBoxFile, $"\nBranch|main||Init\n");
