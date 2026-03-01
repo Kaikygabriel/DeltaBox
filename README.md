@@ -77,6 +77,3 @@ Design de ferramentas CLI
 
 Pensamento arquitetural inspirado em sistemas reais (Git)
 
-🚧 Status do Projeto
-
-🟡 Em desenvolvimento ativo
