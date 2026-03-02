@@ -8,5 +8,6 @@ public class ViewError
     {
         Console.WriteLine(error.Title);
         Console.WriteLine(error.Message);
+
     }
 }
