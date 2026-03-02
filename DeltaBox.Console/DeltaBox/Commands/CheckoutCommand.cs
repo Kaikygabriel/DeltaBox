@@ -8,10 +8,10 @@ public class CheckoutCommand : ICommand
     public Result Checkout(string folder,string branchName)
     {
         var files = Directory.GetFiles(folder);
-        if (!files.Any(x => Path.GetFileName(x) == Configure.DeltaBoxFile))
+        if (!files.Any(x => Path.GetFileName(x).Equals(Configure.DeltaBoxFile)))
             return Error.DeltaBoxNotFound();
         
-        var fileDeltaBox = folder + "/"+Configure.DeltaBoxFile;
+        var fileDeltaBox = Path.Combine(folder,Configure.DeltaBoxFile);
         var lines = File.ReadLines(fileDeltaBox);
         bool existsBranch = false; 
         

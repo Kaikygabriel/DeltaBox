@@ -19,9 +19,10 @@ public class AltersFilesCommand : ICommand
 
         var branchCurrent = "";
         var versionFinish = "";
-        File.SetAttributes(pathFromFolder + "/"+Configure.DeltaBoxFile, FileAttributes.Normal);
+        var fileDeltaBox = Path.Combine(pathFromFolder, Configure.DeltaBoxFile);
+        File.SetAttributes(fileDeltaBox, FileAttributes.Normal);
 
-        var lines = File.ReadLines(pathFromFolder + "/"+Configure.DeltaBoxFile);
+        var lines = File.ReadLines(fileDeltaBox);
         foreach (var line in lines)
         {
             var parts = line.Split('|');
@@ -52,7 +53,7 @@ public class AltersFilesCommand : ICommand
                 }
              
             }
-        foreach (var line in File.ReadLines(pathFromFolder + "/"+Configure.DeltaBoxFile))
+        foreach (var line in File.ReadLines(fileDeltaBox))
         {
             var parts = line.Split('|');
             if (parts.Length >= 4 && parts[1].Equals(versionFinish) && parts[0].Equals(branchCurrent))

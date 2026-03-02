@@ -21,8 +21,8 @@ public sealed class AddVersionsCommand : ICommand
             return Error.DeltaBoxNotFound();
         var result = new Dictionary<string, string>();
         var currentBranch = "";
-        
-        foreach (var line in File.ReadLines(pathFromFolder + "/"+Configure.DeltaBoxFile))
+        var fileDeltaBox = Path.Combine(pathFromFolder, Configure.DeltaBoxFile);
+        foreach (var line in File.ReadLines(fileDeltaBox))
         {
             var parts = line.Split('|');
             
@@ -41,9 +41,9 @@ public sealed class AddVersionsCommand : ICommand
         if (string.IsNullOrEmpty(currentBranch))
             return Result.Failure(new("Branch.NotFound", "not Found")); 
         
-        File.AppendAllText(pathFromFolder + "/"+Configure.DeltaBoxFile, $"\n{currentBranch}|{nameVersion}|{DateTime.UtcNow}\n");
+        File.AppendAllText(fileDeltaBox, $"\n{currentBranch}|{nameVersion}|{DateTime.UtcNow}\n");
 
-        UpdateFilesInDeltaBox(files, result, nameVersion, pathFromFolder,currentBranch);
+        UpdateFilesInDeltaBox(files, result, nameVersion, fileDeltaBox,currentBranch);
 
         
         var dictionaries = Directory.GetDirectories(
@@ -53,7 +53,7 @@ public sealed class AddVersionsCommand : ICommand
 
         foreach (var subDictionary in dictionaries)
         {
-            UpdateFilesInDeltaBox(Directory.GetFiles(subDictionary), result, nameVersion, pathFromFolder,currentBranch);
+            UpdateFilesInDeltaBox(Directory.GetFiles(subDictionary), result, nameVersion, fileDeltaBox,currentBranch);
         }
 
         var filePath = Path.Combine(pathFromFolder, Configure.DeltaBoxFile);
@@ -72,7 +72,7 @@ public sealed class AddVersionsCommand : ICommand
         return Result.Success();
     }
 
-    private void UpdateFilesInDeltaBox(string[] files,Dictionary<string, string>result,string nameVersion,string pathFromFolder,string currentBranch)
+    private void UpdateFilesInDeltaBox(string[] files,Dictionary<string, string>result,string nameVersion,string fileDeltaBox,string currentBranch)
     {
          
         foreach (var filePath in files)
@@ -92,7 +92,7 @@ public sealed class AddVersionsCommand : ICommand
                         text = $"{currentBranch}|{nameVersion}|{filePath.Replace('\\','/')}|{Convert.ToBase64String(currentContent)}\n";
 
                     Console.WriteLine($"Versionando : {text} ");
-                    File.AppendAllText(pathFromFolder + "/"+Configure.DeltaBoxFile, text);
+                    File.AppendAllText(fileDeltaBox, text);
                 }
             }
             else if (fileName != Configure.DeltaBoxFile)
@@ -104,7 +104,7 @@ public sealed class AddVersionsCommand : ICommand
                     text = $"{currentBranch}|{nameVersion}|{filePath.Replace('\\','/')}|{fileInBase64}\n";
                 
                 Console.WriteLine($"Versionando : {text} ");
-                File.AppendAllText(pathFromFolder + "/"+Configure.DeltaBoxFile, text);
+                File.AppendAllText(fileDeltaBox, text);
             }
         }
         

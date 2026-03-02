@@ -11,7 +11,7 @@ public class CreateBranchCommand: ICommand
         if (!files.Any(x => Path.GetFileName(x) == Configure.DeltaBoxFile))
             return Error.DeltaBoxNotFound();
         
-        var fileDeltaBox = folder + "/"+Configure.DeltaBoxFile;
+        var fileDeltaBox = Path.Combine(folder,Configure.DeltaBoxFile);
         var branchCurrent = "";
         var lines = File.ReadLines(fileDeltaBox);
         var currentVersion = "";
