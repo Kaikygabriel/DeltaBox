@@ -5,11 +5,10 @@ using DeltaBox.View;
 
 try
 {
-
     var folder = Environment.CurrentDirectory;
 
     var method = "";
-    if (args is not null && args.Length >= 1)
+    if (args is not null && args.Any())
     {
         method = args[0];
     }
