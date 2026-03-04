@@ -47,5 +47,4 @@ catch (Exception e)
 {
     Console.Error.WriteLine("Error");
     Environment.Exit(1);
-    return;
 }

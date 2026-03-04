@@ -41,7 +41,7 @@ public class InitVersionCommand : ICommand
             SaveFilesOfDirectory(filesInSubDictionary, pathFromFolder);
         }
         if(OperatingSystem.IsWindows())
-            File.SetAttributes(pathFromFolder+ "\\"+Configure.DeltaBoxFile, FileAttributes.Hidden);
+            File.SetAttributes(Path.Combine(pathFromFolder ,Configure.DeltaBoxFile), FileAttributes.Hidden);
 
         return Result.Success();
     }
