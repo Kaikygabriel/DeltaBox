@@ -1,9 +1,11 @@
+using DeltaBox.Commum;
+
 namespace DeltaBox.Abstraction;
 
 public interface IDeltaBoxStorage
 {
-    void ChangeCurrentVersion(string path, string versionCurrent);
-    void ChangeCurrentBranch(string path, string branchCurrent);
-    void AddNewBranch(string path, string branchBase,string versionBase,string newBranchName);
-    void AddNewVersion(string path, string branchCurrent,string versionName);
+    Result ChangeCurrentVersion(string path, string versionCurrent);
+    Result ChangeCurrentBranch(string path, string branchCurrent);
+    Result AddNewBranch(string path, string branchBase,string versionBase,string newBranchName);
+    Result AddNewVersion(string path, string branchCurrent,string versionName);
 }
