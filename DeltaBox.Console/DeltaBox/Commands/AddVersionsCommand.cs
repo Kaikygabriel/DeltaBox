@@ -1,11 +1,19 @@
 using DeltaBox.Abstraction;
 using DeltaBox.Commum;
+using DeltaBox.Service;
+using DeltaBox.Storage;
 
 namespace DeltaBox.Commands;
 
 public sealed class AddVersionsCommand : ICommand
 {
+    private readonly GetFilesIgnore _filesIgnore;
     
+
+    public AddVersionsCommand()
+    {
+        _filesIgnore = new();
+    }
     public Result Execute(CommandContext ctx)
     {
         if (ctx.Args[1] is null)
@@ -43,7 +51,7 @@ public sealed class AddVersionsCommand : ICommand
         
         File.AppendAllText(fileDeltaBox, $"\n{currentBranch}|{nameVersion}|{DateTime.UtcNow}\n");
 
-        UpdateFilesInDeltaBox(files, result, nameVersion, fileDeltaBox,currentBranch);
+        UpdateFilesInDeltaBox(files, result, nameVersion, fileDeltaBox,Path.Combine(pathFromFolder,Configure.DeltaBoxIgnoreFile),currentBranch);
 
         
         var dictionaries = Directory.GetDirectories(
@@ -53,7 +61,7 @@ public sealed class AddVersionsCommand : ICommand
 
         foreach (var subDictionary in dictionaries)
         {
-            UpdateFilesInDeltaBox(Directory.GetFiles(subDictionary), result, nameVersion, fileDeltaBox,currentBranch);
+            UpdateFilesInDeltaBox(Directory.GetFiles(subDictionary), result, nameVersion, fileDeltaBox,Path.Combine(pathFromFolder,Configure.DeltaBoxIgnoreFile),currentBranch);
         }
 
         var filePath = Path.Combine(pathFromFolder, Configure.DeltaBoxFile);
@@ -72,7 +80,7 @@ public sealed class AddVersionsCommand : ICommand
         return Result.Success();
     }
 
-    private void UpdateFilesInDeltaBox(string[] files,Dictionary<string, string>result,string nameVersion,string fileDeltaBox,string currentBranch)
+    private void UpdateFilesInDeltaBox(string[] files,Dictionary<string, string>result,string nameVersion,string fileDeltaBox,string fileDeltaBoxIgnore,string currentBranch)
     {
          
         foreach (var filePath in files)
@@ -80,31 +88,41 @@ public sealed class AddVersionsCommand : ICommand
             byte[] currentContent = File.ReadAllBytes(filePath);
             string fileName = Path.GetFileName(filePath);
 
-            var key = result.Keys.FirstOrDefault(x => x.Equals(filePath, StringComparison.CurrentCultureIgnoreCase));
-            if (key is not null && fileName != Configure.DeltaBoxFile)
+            if (_filesIgnore.FilesIgnore(filePath.Split(new[] { '/', '\\' }).Last(), fileDeltaBoxIgnore))
             {
-                var fileInBytePrevious = Convert.FromBase64String(result.GetValueOrDefault(key) ?? string.Empty);
-
-                if (!currentContent.SequenceEqual(fileInBytePrevious))
+                
+            }
+            else
+            {
+                var key = result.Keys.FirstOrDefault(x =>
+                    x.Equals(filePath, StringComparison.CurrentCultureIgnoreCase));
+                if (key is not null && fileName != Configure.DeltaBoxFile)
                 {
-                    var text = $"{currentBranch}|{nameVersion}|{filePath}|{Convert.ToBase64String(currentContent)}\n";
-                    if (OperatingSystem.IsLinux()|| OperatingSystem.IsMacOS())
-                        text = $"{currentBranch}|{nameVersion}|{filePath.Replace('\\','/')}|{Convert.ToBase64String(currentContent)}\n";
+                    var fileInBytePrevious = Convert.FromBase64String(result.GetValueOrDefault(key) ?? string.Empty);
+
+                    if (!currentContent.SequenceEqual(fileInBytePrevious))
+                    {
+                        var text =
+                            $"{currentBranch}|{nameVersion}|{filePath}|{Convert.ToBase64String(currentContent)}\n";
+                        if (OperatingSystem.IsLinux() || OperatingSystem.IsMacOS())
+                            text =
+                                $"{currentBranch}|{nameVersion}|{filePath.Replace('\\', '/')}|{Convert.ToBase64String(currentContent)}\n";
+
+                        Console.WriteLine($"Versionando : {text} ");
+                        File.AppendAllText(fileDeltaBox, text);
+                    }
+                }
+                else if (fileName != Configure.DeltaBoxFile)
+                {
+                    byte[] content = File.ReadAllBytes(filePath);
+                    var fileInBase64 = Convert.ToBase64String(content);
+                    var text = $"{currentBranch}|{nameVersion}|{filePath}|{fileInBase64}\n";
+                    if (OperatingSystem.IsLinux() || OperatingSystem.IsMacOS())
+                        text = $"{currentBranch}|{nameVersion}|{filePath.Replace('\\', '/')}|{fileInBase64}\n";
 
                     Console.WriteLine($"Versionando : {text} ");
                     File.AppendAllText(fileDeltaBox, text);
                 }
-            }
-            else if (fileName != Configure.DeltaBoxFile)
-            {
-                byte[] content = File.ReadAllBytes(filePath);
-                var fileInBase64 = Convert.ToBase64String(content);
-                var text = $"{currentBranch}|{nameVersion}|{filePath}|{fileInBase64}\n";
-                if (OperatingSystem.IsLinux()|| OperatingSystem.IsMacOS())
-                    text = $"{currentBranch}|{nameVersion}|{filePath.Replace('\\','/')}|{fileInBase64}\n";
-                
-                Console.WriteLine($"Versionando : {text} ");
-                File.AppendAllText(fileDeltaBox, text);
             }
         }
         

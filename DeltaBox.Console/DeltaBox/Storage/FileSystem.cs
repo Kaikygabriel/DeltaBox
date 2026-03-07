@@ -9,7 +9,11 @@ public sealed class FileSystem : IFileSystem
         File.WriteAllLines(path, content);
     }
 
-    public void Append(string path, List<string> content)
+    public void AppendText(string path, string content)
+    {
+        File.AppendAllText(path,content);
+    }
+    public void AppendLines(string path, List<string> content)
     {
         File.AppendAllLines(path,content);
     }
@@ -23,4 +27,6 @@ public sealed class FileSystem : IFileSystem
     {
         File.WriteAllBytes(path, bytes);
     }
+    public string[] ReadAllLines(string path)
+        => File.ReadAllLines(path);
 }

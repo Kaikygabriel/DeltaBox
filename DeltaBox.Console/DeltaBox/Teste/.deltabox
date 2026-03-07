@@ -1,22 +1,8 @@
-CurrentVersion|JuntandoComADev
+CurrentVersion|v1
 
 BranchCurrent|main
+Branch|main| |Init
 
-Branch|main||Init
-
-main|Init|02/03/2026 15:54:31
-main|Init|C:\Users\kaiky\Downloads\kaka\DeltaBox\DeltaBox.Console\DeltaBox\Teste\OlaMundoFile.cs|bmFtZXNwYWNlIERlbHRhQm94LlRlc3RlOw0KDQpwdWJsaWMgY2xhc3MgT2xhTXVuZG9GaWxlDQp7DQogICAgLy9CcmFuY2ggTWFpbiBpbml0DQp9
-
-main|v1|02/03/2026 15:55:22
-main|v1|C:\Users\kaiky\Downloads\kaka\DeltaBox\DeltaBox.Console\DeltaBox\Teste\OlaMundoFile.cs|bmFtZXNwYWNlIERlbHRhQm94LlRlc3RlOw0KDQpwdWJsaWMgY2xhc3MgT2xhTXVuZG9GaWxlDQp7DQogICAgLy9CcmFuY2ggTWFpbiB2MQ0KfQ==
-main|v1|C:\Users\kaiky\Downloads\kaka\DeltaBox\DeltaBox.Console\DeltaBox\Teste\v1File|dGVzdGU=
-
-Branch|dev|main|v1
-
-dev|devInit|02/03/2026 15:58:20
-dev|devInit|C:\Users\kaiky\Downloads\kaka\DeltaBox\DeltaBox.Console\DeltaBox\Teste\OlaMundoFile.cs|bmFtZXNwYWNlIERlbHRhQm94LlRlc3RlOw0KDQpwdWJsaWMgY2xhc3MgT2xhTXVuZG9GaWxlDQp7DQogICAgLy9CcmFuY2ggZGV2IERldkluaXQNCn0=
-dev|devInit|C:\Users\kaiky\Downloads\kaka\DeltaBox\DeltaBox.Console\DeltaBox\Teste\v1File|dGVzdGUgZGV2
-
-main|JuntandoComADev|02/03/2026 15:59:17
-main|JuntandoComADev|C:\Users\kaiky\Downloads\kaka\DeltaBox\DeltaBox.Console\DeltaBox\Teste\OlaMundoFile.cs|bmFtZXNwYWNlIERlbHRhQm94LlRlc3RlOw0KDQpwdWJsaWMgY2xhc3MgT2xhTXVuZG9GaWxlDQp7DQogICAgLy9CcmFuY2ggZGV2IERldkluaXQNCn0=
-main|JuntandoComADev|C:\Users\kaiky\Downloads\kaka\DeltaBox\DeltaBox.Console\DeltaBox\Teste\v1File|dGVzdGUgZGV2
+main|Init|07/03/2026 15:35:59
+ 
+main|v1|07/03/2026 15:55:48

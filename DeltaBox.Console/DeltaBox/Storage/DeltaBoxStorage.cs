@@ -14,52 +14,69 @@ public class DeltaBoxStorage : IDeltaBoxStorage
 
     public Result ChangeCurrentVersion(string path, string versionCurrent)
     {
-        var pathDeltaBox = Path.Combine(path, Configure.DeltaBoxFile);
-        if (!File.Exists(pathDeltaBox))
-            return Error.DeltaBoxNotFound();
-        var filesInDeltaBox = File.ReadAllLines(pathDeltaBox);
+        if (!File.Exists(path))
+        {
+            _fileSystem.AppendText(path,$"CurrentVersion|{versionCurrent}\n");
+            return Result.Success();
+        }
+        
+        var  filesInDeltaBox = _fileSystem.ReadAllLines(path);
+        
+        File.SetAttributes(path, FileAttributes.Normal);
 
-        File.SetAttributes(pathDeltaBox, FileAttributes.Normal);
-
-        filesInDeltaBox[0] = $"CurrentVersion|{versionCurrent}";
-
-        _fileSystem.WriteAll(pathDeltaBox, filesInDeltaBox);
+        if (filesInDeltaBox.Length <= 0)
+        {
+            _fileSystem.AppendText(path,$"CurrentVersion|{versionCurrent}");
+        }
+        else
+        {
+            filesInDeltaBox[0] = $"CurrentVersion|{versionCurrent}"; 
+            _fileSystem.WriteAll(path, filesInDeltaBox);
+        }
         
         return Result.Success();
     }
 
     public Result ChangeCurrentBranch(string path, string branchCurrent)
     {
-        var pathDeltaBox = Path.Combine(path, Configure.DeltaBoxFile);
-        if (!File.Exists(pathDeltaBox))
-            return Error.DeltaBoxNotFound();
-        var filesInDeltaBox = File.ReadAllLines(pathDeltaBox);
+        if (!File.Exists(path))
+        {
+            _fileSystem.AppendText(path,$"\nBranchCurrent|{branchCurrent}");
+            return Result.Success();
+        }
+        
+        var filesInDeltaBox = _fileSystem.ReadAllLines(path);
+        
+        File.SetAttributes(path, FileAttributes.Normal);
 
-        File.SetAttributes(pathDeltaBox, FileAttributes.Normal);
+        if (filesInDeltaBox.Length <= 1)
+        { 
+            _fileSystem.AppendText(path,$"\nBranchCurrent|{branchCurrent}");
+        }
+        else
+        {
+            filesInDeltaBox[2] = $"BranchCurrent|{branchCurrent}";
 
-        filesInDeltaBox[2] = $"BranchCurrent|{branchCurrent}";
-
-        _fileSystem.WriteAll(pathDeltaBox, filesInDeltaBox);
+            _fileSystem.WriteAll(path, filesInDeltaBox);
+        }
         return Result.Success();
     }
 
     public Result AddNewBranch(string path, string branchBase, string versionBase, string newBranchName)
-    {
-        var pathDeltaBox = Path.Combine(path, Configure.DeltaBoxFile);
-        if (!File.Exists(pathDeltaBox))
+    { 
+        if (!File.Exists(path))
             return Error.DeltaBoxNotFound();
 
-        _fileSystem.Append(pathDeltaBox, $"\nBranch|{newBranchName}|{branchBase}|{versionBase}\n");
+        _fileSystem.AppendText(path, $"\nBranch|{newBranchName}|{branchBase}|{versionBase}\n");
         return Result.Success();
     }
 
     public Result AddNewVersion(string path, string branchCurrent, string versionName)
     {
-        var pathDeltaBox = Path.Combine(path, Configure.DeltaBoxFile);
-        if (!File.Exists(pathDeltaBox))
+        if (!File.Exists(path))
             return Error.DeltaBoxNotFound();
 
-        _fileSystem.Append(pathDeltaBox, $"\n{branchCurrent}|{versionName}|{DateTime.UtcNow}\n");
+        _fileSystem.AppendText(path, $"\n{branchCurrent}|{versionName}|{DateTime.UtcNow}\n");
         return Result.Success();
     }
 }
