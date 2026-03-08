@@ -21,12 +21,12 @@ public class PushCommand : ICommand
         var commitsInDeltaBox = File.ReadAllLines(deltaboxPath);
 
         if (commitsInDeltaBox.Length == 0)
-            return new Error("Commits.NOtFOund", "Commits not found or is null");
+            return new Error("Commits.NotFound", "Commits not found or is null");
         
         Console.Write("Seu Nome GitHub: ");
         var name = Console.ReadLine();
         Console.Write("Seu Token GitHub: ");
-        var token = Console.ReadLine();
+        var token = ReadSecret();
         
         if (repo.Commits.Any(x => commitsInDeltaBox.Last().Equals(x.Message)))
         {
@@ -75,7 +75,46 @@ public class PushCommand : ICommand
         };
         var pushRefSpec = $"refs/heads/{repo.Head.FriendlyName}";
         
-        repo.Network.Push(remote,pushRefSpec, options);
+        var branch = repo.Head;
+
+        if (branch.TrackedBranch == null)
+        {
+            repo.Branches.Update(branch, b =>
+            {
+                b.Remote = "origin";
+                b.UpstreamBranch = branch.CanonicalName;
+            });
+        }
+
+        LibGit2Sharp.Commands.Pull(repo,
+            new Signature(
+                name,
+                $"{name}@users.noreply.github.com",
+                DateTimeOffset.Now
+            ),
+            new PullOptions());
+
+        try
+        {
+            repo.Network.Push(remote, pushRefSpec, options);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            Console.WriteLine(ex.StackTrace);
+        }
         return Result.Success();
+    }
+    private static string ReadSecret()
+    {
+        var password = "";
+
+        ConsoleKeyInfo key;
+
+        while ((key = Console.ReadKey(true)).Key != ConsoleKey.Enter)
+        {
+            password += key.KeyChar;
+        }
+        return password;
     }
 }

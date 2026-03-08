@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+CurrentVersion|v3
+=======
 CurrentVersion|v1
+>>>>>>> master
 
 BranchCurrent|main
 Branch|main| |Init
@@ -6,3 +10,10 @@ Branch|main| |Init
 main|Init|07/03/2026 15:35:59
  
 main|v1|07/03/2026 15:55:48
+<<<<<<< HEAD
+
+main|v3|08/03/2026 15:55:43
+main|v3|C:\Users\kaiky\Downloads\kaka\DeltaBox\DeltaBox.Console\DeltaBox\Teste\OlaMundoFile.cs|bmFtZXNwYWNlIERlbHRhQm94LlRlc3RlOw0KDQpwdWJsaWMgY2xhc3MgT2xhTXVuZG9GaWxlDQp7DQogICAgLy9CcmFuY2ggZGV2IERldkluaXQNCn0=
+main|v3|C:\Users\kaiky\Downloads\kaka\DeltaBox\DeltaBox.Console\DeltaBox\Teste\v1File|dGVzdGUgZGV2
+=======
+>>>>>>> master

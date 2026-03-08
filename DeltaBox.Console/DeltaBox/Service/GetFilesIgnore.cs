@@ -11,7 +11,6 @@ public class GetFilesIgnore
     {
         if(_filesIgnore.Count <=0|| _filesIgnore.Count <=0)
             Init(path);
-
         if (nameFile.Equals(Configure.DeltaBoxIgnoreFile))
             return true;
         if (_filesIgnore.Exists(x => x.Equals(nameFile)))

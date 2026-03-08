@@ -124,7 +124,7 @@ public class AltersFilesCommand : ICommand
             
             string fileName = Path.GetFileName(filePath);
             
-            if(!key && fileName != Configure.DeltaBoxFile)
+            if(!key && fileName != Configure.DeltaBoxFile &&fileName != Configure.DeltaBoxIgnoreFile )
             {
                 var currentTextColor = Console.ForegroundColor;
                 Console.ForegroundColor = ConsoleColor.Green;

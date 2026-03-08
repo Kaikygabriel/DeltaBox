@@ -9,7 +9,6 @@ public sealed class AddVersionsCommand : ICommand
 {
     private readonly GetFilesIgnore _filesIgnore;
     
-
     public AddVersionsCommand()
     {
         _filesIgnore = new();

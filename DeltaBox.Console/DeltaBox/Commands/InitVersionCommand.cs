@@ -34,16 +34,12 @@ public class InitVersionCommand : ICommand
 
 
         _storage.ChangeCurrentVersion(fileDeltaBox,"Init");
-        //File.AppendAllText(fileDeltaBox, $"CurrentVersion|Init\n");
         
         _storage.ChangeCurrentBranch(fileDeltaBox,"main");
-        //File.AppendAllText(fileDeltaBox, $"\nBranchCurrent|main\n");
 
         _storage.AddNewBranch(fileDeltaBox, " ", "Init", "main");
-        //File.AppendAllText(fileDeltaBox, $"\nBranch|main||Init\n");
 
         _storage.AddNewVersion(fileDeltaBox, "main", "Init");
-        //File.AppendAllText(fileDeltaBox, $"\nmain|Init|{DateTime.UtcNow}\n");
 
         SaveFilesOfDirectory(files, pathFromFolder);
 
@@ -69,11 +65,7 @@ public class InitVersionCommand : ICommand
         var fileDeltaBoxIgnore = Path.Combine(pathFromFolder,Configure.DeltaBoxIgnoreFile);
         for (var a = 0; a < files.Length; a++)
         {
-            if (_filesIgnore.FilesIgnore(files[a].Split(new[]{'/','\\'}).Last(),fileDeltaBoxIgnore))
-            {
-                
-            }
-            else
+            if (!_filesIgnore.FilesIgnore(files[a].Split(new[]{'/','\\'}).Last(),fileDeltaBoxIgnore))
             {
                 byte[] content = File.ReadAllBytes(files[a]);
                 var fileInBase64 = Convert.ToBase64String(content);
@@ -83,7 +75,6 @@ public class InitVersionCommand : ICommand
                 Console.WriteLine($"Versionando :  {text}");
                 File.AppendAllText(fileDeltaBox, text);
             }
-            
         }
     }
 }
