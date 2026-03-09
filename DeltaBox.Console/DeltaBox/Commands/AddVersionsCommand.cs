@@ -8,9 +8,10 @@ namespace DeltaBox.Commands;
 public sealed class AddVersionsCommand : ICommand
 {
     private readonly GetFilesIgnore _filesIgnore;
-    
+    private readonly IDeltaBoxStorage _storage;
     public AddVersionsCommand()
     {
+        _storage = new DeltaBoxStorage(new FileSystem());
         _filesIgnore = new();
     }
     public Result Execute(CommandContext ctx)
@@ -68,13 +69,8 @@ public sealed class AddVersionsCommand : ICommand
             filePath = filePath.Replace('\\','/');
 
         File.SetAttributes(filePath, FileAttributes.Normal);
-        
-        var lines = File.ReadLines(filePath).ToList();
-        File.SetAttributes(filePath, FileAttributes.Normal);
 
-        lines[0] = $"CurrentVersion|{nameVersion}";
-
-        File.WriteAllLines(filePath, lines);
+        _storage.ChangeCurrentVersion(fileDeltaBox,nameVersion);
 
         return Result.Success();
     }
@@ -107,7 +103,7 @@ public sealed class AddVersionsCommand : ICommand
                             text =
                                 $"{currentBranch}|{nameVersion}|{filePath.Replace('\\', '/')}|{Convert.ToBase64String(currentContent)}\n";
 
-                        Console.WriteLine($"Versionando : {text} ");
+                        Console.WriteLine($"Versioning : {text} ");
                         File.AppendAllText(fileDeltaBox, text);
                     }
                 }
@@ -119,7 +115,7 @@ public sealed class AddVersionsCommand : ICommand
                     if (OperatingSystem.IsLinux() || OperatingSystem.IsMacOS())
                         text = $"{currentBranch}|{nameVersion}|{filePath.Replace('\\', '/')}|{fileInBase64}\n";
 
-                    Console.WriteLine($"Versionando : {text} ");
+                    Console.WriteLine($"Versioning : {text} ");
                     File.AppendAllText(fileDeltaBox, text);
                 }
             }
