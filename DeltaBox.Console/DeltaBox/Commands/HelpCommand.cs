@@ -111,6 +111,25 @@ public sealed class HelpCommand : ICommand
                     "deltabox merge feature-login"
                 }
             ),
+            
+            ["push"] = new CommandHelp(
+                "push",
+                "These are commits to a remote repository on GitHub.",
+                "push",
+                examples: new[]
+                {
+                    "deltabox push\n\tSeu Nome GitHub: name*\n\tSeu Token GitHub: githubToken*\n\tUrl do repositório GitHub: urlRemote*"
+                }
+            ),
+            ["pull"] = new CommandHelp(
+                "pull",
+                "It brings changes from the remote repository to the local repository.",
+                "pull",
+                examples: new[]
+                {
+                    "deltabox pull\n\tSeu Nome GitHub: name*\n\tSeu Token GitHub: githubToken*"
+                }
+            )
         };
     }
     
@@ -186,8 +205,6 @@ public sealed class HelpCommand : ICommand
 
     public Result Execute(CommandContext ctx)
     {
-      
-
         if (ctx.Args.Length == 0)
         {
             PrintGeneralHelp();
