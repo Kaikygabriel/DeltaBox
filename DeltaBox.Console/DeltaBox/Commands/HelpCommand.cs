@@ -129,6 +129,15 @@ public sealed class HelpCommand : ICommand
                 {
                     "deltabox pull\n\tSeu Nome GitHub: name*\n\tSeu Token GitHub: githubToken*"
                 }
+            ),
+            ["connect"] = new CommandHelp(
+                "connect",
+                "Connect the repository local with remote.",
+                "connect",
+                examples: new[]
+                {
+                    "deltabox connect\n\tSua url: url*\n\tSeu Token GitHub: githubToken*"
+                }
             )
         };
     }
