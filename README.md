@@ -69,7 +69,7 @@ CLI (Command Line Interface)
 
 Versionamento de arquivos na prática
 
-Tratamento de paths multiplataforma (/ vs \)
+Tratamento de paths multiplataforma 
 
 Segurança em operações destrutivas
 
