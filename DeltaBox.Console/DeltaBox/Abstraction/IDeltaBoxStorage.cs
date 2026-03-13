@@ -8,4 +8,5 @@ public interface IDeltaBoxStorage
     Result ChangeCurrentBranch(string path, string branchCurrent);
     Result AddNewBranch(string path, string branchBase,string versionBase,string newBranchName);
     Result AddNewVersion(string path, string branchCurrent,string versionName);
+    Result AddCurrentDirectory(string path, string directory);
 }

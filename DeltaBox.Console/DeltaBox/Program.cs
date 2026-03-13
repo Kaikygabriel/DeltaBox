@@ -3,8 +3,8 @@ using DeltaBox.Commands;
 using DeltaBox.Commum;
 using DeltaBox.View;
 
- try 
- {
+ // try 
+ // {
     var folder = Environment.CurrentDirectory;
 
     var method = "";
@@ -27,7 +27,8 @@ using DeltaBox.View;
         ["merge"] = new MergeCommand(),
         ["push"] = new PushCommand(),
         ["pull"] = new PullCommand(),
-        ["connect"] = new ConnectGitHubCommand()
+        ["connect"] = new ConnectGitHubCommand(),
+        ["newos"] = new NewOsCommand(),
     };
 
     if (!commands.TryGetValue(method, out var command))
@@ -35,8 +36,8 @@ using DeltaBox.View;
         if (string.IsNullOrWhiteSpace(method))
         {
             commands["help"].Execute(new CommandContext(folder, new List<string> { "", "" }.ToArray()));
+            return;
         }
-
         Console.Error.WriteLine($"Command Invalid: {method}");
         Environment.Exit(1);
         return;
@@ -45,9 +46,9 @@ using DeltaBox.View;
     var resultCommand = command.Execute(new CommandContext(folder, args));
     if (!resultCommand.IsSuccess)
         ViewError.Get(resultCommand.Error);
-}
-catch (Exception e)
-{
-     Console.Error.WriteLine("Error");
-     Environment.Exit(1);
-}
+// }
+// catch (Exception e)
+// {
+//      Console.Error.WriteLine("Error");
+//      Environment.Exit(1);
+// }

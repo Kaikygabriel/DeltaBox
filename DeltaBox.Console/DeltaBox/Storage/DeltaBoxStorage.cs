@@ -61,7 +61,24 @@ public class DeltaBoxStorage : IDeltaBoxStorage
         }
         return Result.Success();
     }
-
+    
+    public Result AddCurrentDirectory(string path, string directory)
+    {
+        if (!File.Exists(path))
+        {
+            _fileSystem.AppendText(path,$"Directory|{directory}");
+            return Result.Success();
+        }
+        
+        var filesInDeltaBox = _fileSystem.ReadAllLines(path);
+        
+        File.SetAttributes(path, FileAttributes.Normal);
+        
+        _fileSystem.AppendText(path,$"Directory|{directory}");
+        
+        return Result.Success();
+    }
+    
     public Result AddNewBranch(string path, string branchBase, string versionBase, string newBranchName)
     { 
         if (!File.Exists(path))

@@ -6,8 +6,8 @@ public class ViewError
 {
     public static void Get(Error error)
     {
-        Console.WriteLine(error.Title);
-        Console.WriteLine(error.Message);
-
+        Console.Error.WriteLine(error.Title);
+        Console.Error.WriteLine(error.Message);
+        Environment.Exit(1);
     }
 }

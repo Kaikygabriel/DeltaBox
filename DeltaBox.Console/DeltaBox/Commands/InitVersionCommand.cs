@@ -41,6 +41,8 @@ public class InitVersionCommand : ICommand
 
         _storage.AddNewVersion(fileDeltaBox, "main", "Init");
 
+        _storage.AddCurrentDirectory(fileDeltaBox, Environment.CurrentDirectory);
+        
         SaveFilesOfDirectory(files, pathFromFolder);
 
         var dictionaries = Directory.GetDirectories(
