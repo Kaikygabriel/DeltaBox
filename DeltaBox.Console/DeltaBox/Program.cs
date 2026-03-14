@@ -28,7 +28,7 @@ using DeltaBox.View;
         ["push"] = new PushCommand(),
         ["pull"] = new PullCommand(),
         ["connect"] = new ConnectGitHubCommand(),
-        ["newos"] = new NewOsCommand(),
+        ["clone"] = new CloneCommand()
     };
 
     if (!commands.TryGetValue(method, out var command))

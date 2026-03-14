@@ -15,14 +15,14 @@ internal sealed class CloneCommand : ICommand
 
     public Result Execute(CommandContext ctx)
     {
-        Console.Write("Repository remote : ");
-        string repoUrl = Console.ReadLine();
+        string repoUrl = ctx.Args[1];
         if (string.IsNullOrWhiteSpace(repoUrl))
             return new Error("Repository.Invalid", "Repository is null or empty");
         
         string path = ctx.Folder;
+        var repoName = repoUrl.Split('/').Last().Replace(".git", "");
 
-        Repository.Clone(repoUrl, path);
+        Repository.Clone(repoUrl, repoName);
         _command.Execute(ctx);
         return Result.Success();
     }
