@@ -67,7 +67,8 @@ public class InitVersionCommand : ICommand
         var fileDeltaBoxIgnore = Path.Combine(pathFromFolder,Configure.DeltaBoxIgnoreFile);
         for (var a = 0; a < files.Length; a++)
         {
-            if (!_filesIgnore.FilesIgnore(files[a].Split(new[]{'/','\\'}).Last(),fileDeltaBoxIgnore))
+            if (!_filesIgnore.FilesIgnore(files[a].Split(new[]{'/','\\'}).Last(),fileDeltaBoxIgnore)||
+                !files[a].Split(new[]{'/','\\'}).Contains(".git"))
             {
                 byte[] content = File.ReadAllBytes(files[a]);
                 var fileInBase64 = Convert.ToBase64String(content);

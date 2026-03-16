@@ -83,7 +83,7 @@ public sealed class AddVersionsCommand : ICommand
             byte[] currentContent = File.ReadAllBytes(filePath);
             string fileName = Path.GetFileName(filePath);
 
-            if (_filesIgnore.FilesIgnore(filePath.Split(new[] { '/', '\\' }).Last(), fileDeltaBoxIgnore))
+            if (_filesIgnore.FilesIgnore(filePath.Split(new[] { '/', '\\' }).Last(), fileDeltaBoxIgnore) || filePath.Split(new[]{'/','\\'}).Contains(".git"))
             {
                 
             }
