@@ -6,9 +6,10 @@ namespace DeltaBox.Commands;
 
 internal sealed class CloneCommand : ICommand
 {
-
+    private readonly ICommand _command;
     public CloneCommand()
     {
+        _command = new NewOsCommand();
     }
 
     public Result Execute(CommandContext ctx)
@@ -21,6 +22,7 @@ internal sealed class CloneCommand : ICommand
         var repoName = repoUrl.Split('/').Last().Replace(".git", "");
 
         Repository.Clone(repoUrl, repoName);
+        _command.Execute(ctx);
         return Result.Success();
     }
 }
