@@ -36,7 +36,8 @@ public class PushCommand : ICommand
             if (repo.RetrieveStatus().IsDirty)
             {
                 LibGit2Sharp.Commands.Stage(repo, "*");
-            
+                LibGit2Sharp.Commands.Unstage(repo, ".deltabox");
+                
                 var author = new Signature(
                     name,
                     $"{name}@users.noreply.github.com",

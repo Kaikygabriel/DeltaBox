@@ -9,7 +9,7 @@ internal sealed class CloneCommand : ICommand
     private readonly ICommand _command;
     public CloneCommand()
     {
-        _command = new NewOsCommand();
+        _command = new InitVersionCommand();
     }
 
     public Result Execute(CommandContext ctx)
