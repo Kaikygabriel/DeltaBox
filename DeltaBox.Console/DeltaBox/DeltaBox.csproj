@@ -9,7 +9,7 @@
     <ToolCommandName>deltabox</ToolCommandName>
 
     <PackageId>DeltaBox</PackageId> 
-    <Version>1.0.0</Version>
+    <Version>2.0.0</Version>
     <Authors>Kaiky</Authors>
     <Company>Kaiky</Company>
     <Description>CLI para gerenciamento DeltaBox</Description>

@@ -3,8 +3,8 @@ using DeltaBox.Commands;
 using DeltaBox.Commum;
 using DeltaBox.View;
 
- // try 
- // {
+ try 
+ {
     var folder = Environment.CurrentDirectory;
 
     var method = "";
@@ -29,7 +29,6 @@ using DeltaBox.View;
         ["pull"] = new PullCommand(),
         ["connect"] = new ConnectGitHubCommand(),
         ["clone"] = new CloneCommand(),
-        ["newos"] = new NewOsCommand()
     };
 
     if (!commands.TryGetValue(method, out var command))
@@ -47,9 +46,9 @@ using DeltaBox.View;
     var resultCommand = command.Execute(new CommandContext(folder, args));
     if (!resultCommand.IsSuccess)
         ViewError.Get(resultCommand.Error);
-// }
-// catch (Exception e)
-// {
-//      Console.Error.WriteLine("Error");
-//      Environment.Exit(1);
-// }
+}
+catch (Exception e)
+{
+     Console.Error.WriteLine("Error");
+     Environment.Exit(1);
+}
