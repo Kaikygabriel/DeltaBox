@@ -1,78 +1,107 @@
-🚀 O que é o DeltaBox?
+# 🚀 DeltaBox
 
-O DeltaBox é um sistema de versionamento local desenvolvido em .NET, criado para registrar, comparar e restaurar versões de arquivos e diretórios de forma simples e eficiente.
+## 📖 O que é o DeltaBox?
 
-Ele foi pensado para:
+O **DeltaBox** é um sistema de versionamento local desenvolvido em .NET, criado para registrar, comparar e restaurar versões de arquivos e diretórios de forma simples e eficiente.
 
-Evitar perda de arquivos recém-criados ou não salvos
+Ele foi projetado para:
 
-Facilitar testes e experimentações sem medo de quebrar o projeto
+* Versionamento de arquivos (Similar ao git)
+* Evitar perda de arquivos recém-criados ou não salvos
+* Facilitar testes e experimentações sem risco de quebrar o projeto
+* Funcionar de forma consistente em **Windows, Linux e macOS**
 
-Funcionar de forma consistente em Windows, Linux e macOS
+---
 
-🎯 Principais Objetivos
+## 🎯 Objetivos
 
-🔒 Segurança de versões: impedir perda de dados durante mudanças de versão
+* 🔒 **Segurança de versões**
+  Impedir perda de dados durante mudanças de versão
 
-🔄 Versionamento incremental: acompanhar a evolução dos arquivos
+* 🔄 **Versionamento incremental**
+  Acompanhar a evolução dos arquivos ao longo do tempo
 
-🧩 Portabilidade total: funcionamento consistente em múltiplos sistemas operacionais
+* 🌍 **Portabilidade**
+  Funcionamento consistente em múltiplos sistemas operacionais
 
-⚡ Simplicidade: uso direto via CLI, sem dependências externas complexas
+* ⚡ **Simplicidade**
+  Uso direto via CLI, sem dependências externas complexas
 
-✨ Funcionalidades
+---
 
-📂 Criar versões
+## ✨ Funcionalidades
 
-Gera um snapshot do estado atual dos arquivos
+### 📂 Criação de versões
 
-🕒 Listar versões (commits)
+Gera um snapshot do estado atual dos arquivos.
 
-Visualiza todo o histórico de versões criadas
+---
 
-🔍 Visualizar alterações
+### 📂 Compatibilidade com GitHub
 
-Mostra diferenças entre o estado atual e a última versão
+Pode se usar o github junto ao deltabox para alocação de arquivos remotos.
 
-Funciona de forma semelhante ao git status
+---
 
-⏪ Voltar para uma versão anterior
+### 🕒 Histórico de versões
 
-Restaura arquivos e pastas com segurança
+Lista todos os commits/versionamentos criados.
 
-🗑️ Remover versões
+---
 
-Exclui commits/versionamentos antigos quando não são mais necessários
+### 🔍 Visualização de alterações
 
-🛡️ Proteção contra perda de arquivos
+Mostra as diferenças entre o estado atual e a última versão.
+Funciona de forma semelhante ao `git status`.
 
-Arquivos recém-criados ou não salvos não são sobrescritos ao trocar de versão
+---
 
-🌍 Compatibilidade multiplataforma
+### ⏪ Restauração de versões
 
-Windows
+Permite voltar para versões anteriores com segurança.
 
-Linux
+---
 
-macOS
+### 🗑️ Remoção de versões
 
-🛠️ Tecnologias Utilizadas
+Exclui commits antigos quando não são mais necessários.
 
-.NET (C#)
+---
 
-Manipulação de arquivos e diretórios (System.IO)
+### 🛡️ Proteção contra perda de arquivos
 
-Estrutura modular para evolução futura
+Arquivos recém-criados ou não salvos **não são sobrescritos** ao trocar de versão.
 
-CLI (Command Line Interface)
-🧠 Aprendizados com o Projeto
+---
 
-Versionamento de arquivos na prática
+### 🌍 Compatibilidade multiplataforma
 
-Tratamento de paths multiplataforma 
+* Windows
+* Linux
+* macOS
 
-Segurança em operações destrutivas
+---
 
-Design de ferramentas CLI
+## 🛠️ Tecnologias Utilizadas
 
-Pensamento arquitetural inspirado em sistemas reais (Git)
+* .NET (C#)
+* System.IO (manipulação de arquivos e diretórios)
+* Arquitetura modular para evolução futura
+* CLI (Command Line Interface)
+
+---
+
+## 🧠 Aprendizados com o Projeto
+
+* Versionamento de arquivos na prática
+* Manipulação de paths multiplataforma
+* Segurança em operações destrutivas
+* Design de ferramentas CLI
+* Pensamento arquitetural inspirado em sistemas reais (como o Git)
+
+---
+
+## 💡 Resumo
+
+O DeltaBox foca em **simplicidade, segurança e produtividade**, oferecendo uma alternativa leve para versionamento local sem a complexidade de ferramentas tradicionais.
+
